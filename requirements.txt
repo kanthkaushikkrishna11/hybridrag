@@ -1,40 +1,40 @@
 # Frontend Requirements
-streamlit==1.32.2
+streamlit>=1.32.0,<2.0.0
 
-# AI/ML Dependencies (Simplified - Let pip resolve where possible)
-google-generativeai==0.3.2
-pinecone-client==5.0.1
-langchain-core==0.2.39
-langchain==0.2.16
-langchain-community==0.2.16
-langgraph==0.2.28
-langchain-pinecone==0.1.3
-langchain-google-genai==1.0.10
-langchain-huggingface==0.0.3
-sentence-transformers==2.7.0
+# AI/ML Dependencies - RANGES (Let pip resolve compatible versions automatically)
+google-generativeai>=0.7.0,<0.8.0
+pinecone-client>=5.0.0,<6.0.0
+langchain-core>=0.2.0,<0.3.0
+langchain>=0.2.0,<0.3.0
+langchain-community>=0.2.0,<0.3.0
+langgraph>=0.2.0,<0.3.0
+langchain-pinecone>=0.1.0,<0.2.0
+langchain-google-genai>=1.0.0,<2.0.0
+langchain-huggingface>=0.0.1,<0.1.0
+sentence-transformers>=2.7.0,<3.0.0
 
 # Utilities
-python-dotenv==1.0.1
-requests==2.31.0
-werkzeug==3.0.1
+python-dotenv>=1.0.0
+requests>=2.31.0
+werkzeug>=3.0.0
 
 # Production server
-gunicorn==21.2.0
+gunicorn>=21.0.0
 
 # FastAPI Dependencies
-fastapi==0.110.0
-uvicorn[standard]==0.27.1
-pydantic==2.6.3
-starlette==0.36.3
-python-multipart==0.0.9
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.6.0
+starlette>=0.36.0
+python-multipart>=0.0.9
 
 # Database
-sqlalchemy==2.0.27
-psycopg2-binary==2.9.9
-asyncpg==0.29.0
-supabase==2.4.0
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+asyncpg>=0.29.0
+supabase>=2.4.0
 
 # PDF Processing
-pdfplumber==0.11.0
-pandas==2.2.1
-pypdf==4.1.0
+pdfplumber>=0.11.0
+pandas>=2.2.0
+pypdf>=4.1.0
