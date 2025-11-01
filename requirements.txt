@@ -1,10 +1,9 @@
 # Frontend Requirements
 streamlit==1.32.2
 
-# AI/ML Dependencies (FINAL VALIDATED COMPATIBLE SET)
-# Calculated to satisfy all dependency constraints
+# AI/ML Dependencies (Simplified - Let pip resolve where possible)
 google-generativeai==0.3.2
-pinecone-client==3.2.2
+pinecone-client==5.0.1
 langchain-core==0.2.39
 langchain==0.2.16
 langchain-community==0.2.16
