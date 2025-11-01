@@ -1,40 +1,40 @@
-# Frontend Requirments
-streamlit
+# Frontend Requirements
+streamlit==1.32.2
 
-# AI/ML Dependencies
-google-generativeai>=0.3.0
-pinecone-client>=2.2.0
-langgraph>=0.0.20
+# AI/ML Dependencies (pinned versions for reproducibility)
+google-generativeai==0.3.2
+pinecone-client==3.2.2
+langgraph==0.0.62
 langchain-core==0.1.52
 langchain==0.1.20
 langchain-community==0.0.38
-langchain-pinecone>=0.0.1
+langchain-pinecone==0.1.0
 langchain-google-genai==0.0.11
-langchain-huggingface>=0.0.1
-sentence-transformers>=3.0.0
+langchain-huggingface==0.0.1
+sentence-transformers==2.7.0
 
 # Utilities
-python-dotenv
-requests
-werkzeug
+python-dotenv==1.0.1
+requests==2.31.0
+werkzeug==3.0.1
 
-# Development (optional)
-gunicorn
+# Production server
+gunicorn==21.2.0
 
 # FastAPI Dependencies
-fastapi
-uvicorn[standard]
-pydantic
-starlette
-python-multipart
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
+pydantic==2.6.3
+starlette==0.36.3
+python-multipart==0.0.9
 
 # Database
-sqlalchemy
-psycopg2-binary
-asyncpg
-supabase
+sqlalchemy==2.0.27
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+supabase==2.4.0
 
 # PDF Processing
-pdfplumber
-pandas
-pypdf
+pdfplumber==0.11.0
+pandas==2.2.1
+pypdf==4.1.0
