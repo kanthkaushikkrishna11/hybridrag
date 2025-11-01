@@ -1,6 +1,6 @@
 # Frontend Requirments
 streamlit
-
+sentence-transformers>=3.0.0
 # AI/ML Dependencies
 google-generativeai
 pinecone
