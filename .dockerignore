@@ -1,0 +1,86 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Documentation (not needed in container)
+docs/
+*.md
+README.md
+LICENSE
+
+# Test files
+tests/
+test_*.py
+*_test.py
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node modules (will be installed during build)
+node_modules/
+frontend-new/node_modules/
+
+# Frontend build artifacts (will be created during build)
+frontend-new/dist/
+frontend-new/build/
+
+# Archives and backups
+*.zip
+*.tar.gz
+*.rar
+logs_archive/
+HybridRAG/
+
+# Jupyter notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# Resources (large files not needed in container)
+resources/*.pdf
+resources/*.png
+
+# Scripts not needed in production
+scripts/
+deploy-aws.sh
+Makefile
+
+# Docker files (not needed inside container)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+

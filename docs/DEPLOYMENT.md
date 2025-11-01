@@ -1,8 +1,50 @@
 # Deployment Guide
 
-This document provides guidance on deploying the PDF Assistant Chatbot application, which consists of a FastAPI backend and a Streamlit frontend.
+This document provides guidance on deploying the HybridRAG application, which consists of a FastAPI backend and a React frontend.
 
-## Backend Deployment (FastAPI Application)
+## 🚀 Recommended: AWS Docker Deployment
+
+**For the simplest and most reliable deployment, we recommend using Docker on AWS EC2.**
+
+### Complete AWS Docker Deployment Guide
+
+We provide a comprehensive, step-by-step guide for deploying with Docker on AWS:
+
+👉 **[AWS Docker Deployment Guide](AWS_DOCKER_DEPLOYMENT.md)**
+
+This guide includes:
+- ✅ Complete setup instructions from scratch
+- ✅ Docker and Docker Compose configuration
+- ✅ Automated deployment script
+- ✅ Environment variable configuration
+- ✅ Troubleshooting guide
+- ✅ Maintenance and monitoring instructions
+
+### Quick Start with Docker
+
+If you already have Docker installed on your AWS EC2 instance:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/kanthkaushikkrishna11/hybridrag.git
+cd hybridrag
+
+# 2. Copy and configure environment variables
+cp env.template .env
+nano .env  # Fill in your credentials
+
+# 3. Run the automated deployment script
+chmod +x deploy-aws.sh
+./deploy-aws.sh
+```
+
+That's it! Your application will be live at `http://YOUR_AWS_PUBLIC_IP`
+
+---
+
+## Alternative Deployment Options
+
+### Backend Deployment (FastAPI Application)
 
 The FastAPI backend is designed to be deployed as a standard Python ASGI application.
 
