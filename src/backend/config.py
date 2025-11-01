@@ -2,6 +2,7 @@
 import logging
 import os
 from dotenv import load_dotenv
+from urllib.parse import quote_plus
 
 # Load environment variables from .env file
 load_dotenv()
@@ -103,8 +104,10 @@ class Config:
     def database_url(self):
         """Get database URL, validating config first."""
         self.validate_database_config()
+        # URL-encode password to handle special characters like @, :, etc.
+        encoded_password = quote_plus(self.DATABASE_PASSWORD)
         return (
-            f"postgresql+psycopg2://{self.DATABASE_USER}:{self.DATABASE_PASSWORD}"
+            f"postgresql+psycopg2://{self.DATABASE_USER}:{encoded_password}"
             f"@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}"
             f"?sslmode=require"
         )

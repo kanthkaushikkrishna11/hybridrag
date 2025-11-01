@@ -2,20 +2,21 @@
 import logging
 import uuid
 from typing import List
-import google.generativeai as genai
+from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone, ServerlessSpec
 
 logger = logging.getLogger(__name__)
 
 
 class EmbeddingService:
-    """Service for handling text embeddings using Google Gemini and Pinecone."""
+    """Service for handling text embeddings using HuggingFace Sentence Transformers and Pinecone."""
     
     def __init__(self, gemini_api_key: str, pinecone_config: dict):
-        """Initialize the embedding service with Google Gemini and Pinecone."""
-        # Configure Google AI
-        genai.configure(api_key=gemini_api_key)
-        logger.info("Google AI API configured successfully")
+        """Initialize the embedding service with HuggingFace and Pinecone."""
+        # Initialize HuggingFace Sentence Transformer (free, local)
+        # Using all-mpnet-base-v2: 768 dimensions, excellent quality
+        self.embedding_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+        logger.info("HuggingFace Sentence Transformer loaded successfully (all-mpnet-base-v2)")
         
         # Initialize Pinecone
         try:
@@ -39,9 +40,9 @@ class EmbeddingService:
             logger.info("Pinecone initialized successfully")
             
             print(f"\n=== Embedding Service Initialization ===")
-            print(f"Embedding Model: Google Gemini embedding-001")
+            print(f"Embedding Model: HuggingFace sentence-transformers/all-mpnet-base-v2 (FREE, LOCAL)")
             print(f"Pinecone Index: {pinecone_config['index_name']}")
-            print(f"Dimension: {pinecone_config['dimension']}")
+            print(f"Dimension: {pinecone_config['dimension']} (768 for all-mpnet-base-v2)")
             print("=======================================\n")
             
         except Exception as e:
@@ -50,38 +51,26 @@ class EmbeddingService:
             raise RuntimeError("Pinecone initialization failed")
 
     def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
-        """Generate embeddings using Google Gemini embedding-001 model."""
+        """Generate embeddings using HuggingFace Sentence Transformers (free, local)."""
         try:
-            embeddings = []
-            batch_size = 100  # Process in batches to avoid rate limits
+            logger.info(f"Generating embeddings for {len(texts)} text chunks using HuggingFace")
+            print(f"Generating embeddings for {len(texts)} text chunks (local, no API calls)")
             
-            logger.info(f"Generating embeddings for {len(texts)} text chunks using Google Gemini")
-            print(f"Generating embeddings for {len(texts)} text chunks")
+            # Generate embeddings using HuggingFace Sentence Transformer
+            # This runs locally on your machine - no API calls, no quotas!
+            embeddings = self.embedding_model.encode(
+                texts,
+                batch_size=32,  # Process in batches for efficiency
+                show_progress_bar=True,
+                convert_to_numpy=True
+            )
             
-            for i in range(0, len(texts), batch_size):
-                batch = texts[i:i + batch_size]
-                logger.debug(f"Processing batch {i//batch_size + 1}/{(len(texts) + batch_size - 1)//batch_size}")
-                
-                batch_embeddings = []
-                for text in batch:
-                    try:
-                        # Use Google Gemini embedding-001 model
-                        result = genai.embed_content(
-                            model="models/embedding-001",
-                            content=text,
-                            task_type="retrieval_document"
-                        )
-                        batch_embeddings.append(result['embedding'])
-                    except Exception as e:
-                        logger.error(f"Failed to generate embedding for text chunk: {str(e)}")
-                        # Use a zero vector as fallback
-                        batch_embeddings.append([0.0] * 768)
-                
-                embeddings.extend(batch_embeddings)
+            # Convert numpy arrays to lists
+            embeddings_list = [emb.tolist() for emb in embeddings]
             
-            logger.info(f"Successfully generated {len(embeddings)} embeddings")
-            print(f"Successfully generated {len(embeddings)} embeddings")
-            return embeddings
+            logger.info(f"Successfully generated {len(embeddings_list)} embeddings locally")
+            print(f"✅ Successfully generated {len(embeddings_list)} embeddings (768-dim, local)")
+            return embeddings_list
             
         except Exception as e:
             logger.error(f"Failed to generate embeddings: {str(e)}")
@@ -89,7 +78,7 @@ class EmbeddingService:
             raise
 
     def store_text_embeddings(self, text_chunks: List[str], pdf_uuid: str, original_filename: str = None) -> int:
-        """Store text embeddings in Pinecone using Google Gemini embeddings."""
+        """Store text embeddings in Pinecone using HuggingFace embeddings (free, local)."""
         try:
             if not text_chunks:
                 logger.warning("No text chunks provided for embedding")
@@ -99,7 +88,7 @@ class EmbeddingService:
             print(f"\n=== Pinecone Storage ===")
             print(f"Processing {len(text_chunks)} text chunks")
             
-            # Generate embeddings using Google Gemini
+            # Generate embeddings using HuggingFace (local, free)
             embeddings = self.generate_embeddings(text_chunks)
             
             # Prepare vectors for Pinecone

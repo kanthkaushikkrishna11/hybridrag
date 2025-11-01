@@ -134,3 +134,62 @@ class DataSummaryResponse(BaseModel):
     data: DataSummary
     timestamp: str
     totals: Dict[str, int]
+
+
+class ComparisonResponse(BaseModel):
+    """Response model for RAG comparison (Conventional vs Hybrid)."""
+    success: bool
+    query: str
+    conventional_rag: Dict[str, Any]  # {answer, success, processing_time, method}
+    hybrid_rag: Dict[str, Any]  # {answer, success, processing_time, method, query_type}
+    error: Optional[str] = None
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "success": True,
+                "query": "What was the host nation for the first World Cup?",
+                "conventional_rag": {
+                    "answer": "Uruguay hosted the first FIFA World Cup...",
+                    "success": True,
+                    "processing_time": 2.5,
+                    "method": "vector_search"
+                },
+                "hybrid_rag": {
+                    "answer": "According to the table data, Uruguay...",
+                    "success": True,
+                    "processing_time": 3.2,
+                    "method": "langgraph_manager",
+                    "query_type": "hybrid"
+                },
+                "error": None
+            }
+        }
+
+
+class FormatRequest(BaseModel):
+    """Request model for response formatting."""
+    raw_answer: str
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "raw_answer": "Uruguay | 1930 Italy | 1934 Italy | 1938 West Germany | 1954"
+            }
+        }
+
+
+class FormatResponse(BaseModel):
+    """Response model for formatted answers."""
+    formatted_answer: str
+    success: bool
+    error: Optional[str] = None
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "formatted_answer": "Here are the World Cup winners:\n\n• Uruguay (1930)\n• Italy (1934)\n• Italy (1938)\n• West Germany (1954)",
+                "success": True,
+                "error": None
+            }
+        }

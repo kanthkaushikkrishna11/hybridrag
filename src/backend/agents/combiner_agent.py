@@ -12,19 +12,20 @@ class CombinerAgent:
     Agent responsible for intelligently combining responses from Table and RAG nodes
     """
     
-    def __init__(self, gemini_api_key: str):
+    def __init__(self, gemini_api_key: str, model_name: str = "gemini-2.5-flash"):
         """
         Initialize the Combiner Agent with Gemini LLM
         
         Args:
             gemini_api_key (str): Google Gemini API key
+            model_name (str): Gemini model to use (default: gemini-2.5-flash)
         """
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
+            model=model_name,
             google_api_key=gemini_api_key,
             temperature=0.3  # Slightly higher for more creative combinations
         )
-        logger.info("Combiner Agent initialized successfully")
+        logger.info(f"Combiner Agent initialized successfully with model: {model_name}")
     
     def combine_responses(
         self, 
@@ -103,23 +104,62 @@ class CombinerAgent:
         """
         try:
             system_prompt = """
-            You are an intelligent answer synthesizer that creates clear, informative, and conversational responses by merging two sources:
-            1. RAG Response: General knowledge or contextual explanation
-            2. Table Response: Factual or data-driven insight (may be raw or terse)
+            You are an expert answer synthesizer that creates comprehensive, well-formatted responses by intelligently merging:
+            1. RAG Response: Historical context, narratives, background information
+            2. Table Response: Statistical data, match records, numerical facts
 
-            Your tasks:
-            - Always provide a single, coherent, well-written response to the user's query
-            - When the table response is raw or minimal (e.g., just a list or tuple), rephrase it into a complete, natural explanation
-            - If only one source is useful, use it fully—don’t copy raw outputs verbatim; convert them into clear English
-            - Use contextual knowledge from the RAG response to enrich and explain the data when available
-            - Avoid redundancy and prioritize relevance to the original query
-            - Maintain a friendly, concise, and natural tone
-            - Never mention or refer to the source of the response (e.g., don’t say “table says...”)
-
-            Structure:
-            - Begin with a short, clear answer to the user’s query
-            - Follow with any relevant detail, explanation, or data points
-            - If needed, fill in gaps using logical reasoning or domain knowledge
+            ⚠️ CRITICAL: PRESERVATION RULE ⚠️
+            - If Table Response contains a detailed list (e.g., match-by-match data), you MUST include ALL items
+            - NEVER summarize or truncate detailed data provided by Table Response
+            - Your job is to ORGANIZE and FORMAT, not to REDUCE information
+            
+            FORMATTING RULES:
+            
+            1. STRUCTURE (for comprehensive queries):
+               a) Start with a clear summary sentence
+               b) Add historical context from RAG Response
+               c) Show aggregate statistics (if present) in one line
+               d) Present complete detailed data (e.g., all matches) with clean formatting
+            
+            2. DATA PRESENTATION:
+               - Remove duplicate entries (same item appearing multiple times)
+               - Remove repeated aggregate columns (if same total appears in every row, show once)
+               - Convert technical formats to natural language:
+                 * "Home_Score: 4, Away_Score: 2" → "4-2"
+                 * "opponent: Argentina, Round: Final" → "Final vs Argentina"
+               - Use bullet points for lists
+            
+            3. QUALITY STANDARDS:
+               - Complete, not concise - include ALL data points
+               - Natural, readable language
+               - Professional formatting with clear sections
+               - Never mention sources ("table says", "according to data")
+            
+            4. EXAMPLES:
+            
+            BAD (drops data):
+            Uruguay won key matches including:
+            * 1930 Final: 4-2 vs Argentina
+            * 1950: Defeated Brazil
+            [Missing 9 other matches!]
+            
+            GOOD (preserves all data):
+            Uruguay's World Cup History:
+            
+            Historical Achievements:
+            * First-ever World Cup champions (1930)
+            * "Maracanazo" victory over Brazil (1950)
+            
+            Overall Record: 9 wins, 1 draw, 1 loss • Goals: 28 scored, 12 conceded
+            
+            Complete Match History:
+            * 1930 Group 1: Uruguay 1-0 Peru
+            * 1930 Group 3: Uruguay 4-0 Romania  
+            * 1930 Semi-final: Uruguay 6-1 Yugoslavia
+            * 1930 Final: Uruguay 4-2 Argentina
+            [... continues for ALL 11 matches]
+            
+            Remember: If Table Response has N items, your output must have N items.
             """
             
             user_prompt = f"""

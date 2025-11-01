@@ -4,7 +4,7 @@ import traceback
 from fastapi import APIRouter, HTTPException, UploadFile, File, Request
 
 from ..services.clear_data_service import clear_data_service
-from ..models import QueryRequest, AnswerResponse, UploadResponse, IndexResponse, ClearDataResponse 
+from ..models import QueryRequest, AnswerResponse, UploadResponse, IndexResponse, ClearDataResponse, ComparisonResponse, FormatRequest, FormatResponse 
 
 # Configure logging
 logging.basicConfig(level=logging.INFO,
@@ -176,6 +176,230 @@ async def answer_question(request: QueryRequest, fastapi_request: Request):
             detail={
                 "answer": "An unexpected error occurred while processing your question.",
                 "success": False,
+                "error": f"Internal server error: {str(e)}"
+            }
+        )
+
+
+@router.post("/format_response", response_model=FormatResponse)
+async def format_response(request: FormatRequest, fastapi_request: Request):
+    """
+    Format raw response text into a more readable format using Gemini AI.
+    
+    This endpoint takes raw table data or unformatted text and converts it into
+    a clean, bullet-pointed, human-readable format.
+    """
+    try:
+        logger.info("Format response endpoint called")
+        
+        raw_answer = request.raw_answer.strip()
+        if not raw_answer:
+            return {
+                "formatted_answer": "No content to format.",
+                "success": False,
+                "error": "Empty raw_answer provided"
+            }
+        
+        logger.info(f"Formatting raw answer (length: {len(raw_answer)})")
+        
+        # Check if orchestrator is available to access Gemini
+        orchestrator = getattr(fastapi_request.app.state, 'orchestrator', None)
+        if orchestrator is None:
+            logger.warning("Orchestrator not available, using basic formatting")
+            # Fallback to basic formatting
+            formatted = _basic_format(raw_answer)
+            return {
+                "formatted_answer": formatted,
+                "success": True,
+                "error": None
+            }
+        
+        # Use Gemini to format the response
+        try:
+            import google.generativeai as genai
+            import os
+            
+            # Initialize Gemini
+            api_key = os.getenv('GEMINI_API_KEY')
+            if not api_key:
+                logger.warning("GEMINI_API_KEY not found, using basic formatting")
+                formatted = _basic_format(raw_answer)
+                return {
+                    "formatted_answer": formatted,
+                    "success": True,
+                    "error": None
+                }
+            
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel('gemini-2.5-flash')
+            
+            # Create formatting prompt
+            prompt = f"""You are a response formatter. Your job is to convert raw data into clean, readable text.
+
+Raw response to format:
+{raw_answer}
+
+Please format this response to be more readable:
+1. If it contains table data (with | separators), convert it to bullet points
+2. If it contains country names and years, format as "• Country (Year)"
+3. Make it concise and easy to read
+4. Use bullet points (•) for lists
+5. Add proper spacing and line breaks
+6. Keep the information accurate - don't add or remove data
+
+Return only the formatted text, no explanations."""
+
+            logger.info("Calling Gemini to format response")
+            response = model.generate_content(prompt)
+            formatted_answer = response.text.strip()
+            
+            logger.info(f"Successfully formatted response (output length: {len(formatted_answer)})")
+            
+            return {
+                "formatted_answer": formatted_answer,
+                "success": True,
+                "error": None
+            }
+            
+        except Exception as e:
+            logger.error(f"Gemini formatting failed: {e}, using basic formatting")
+            formatted = _basic_format(raw_answer)
+            return {
+                "formatted_answer": formatted,
+                "success": True,
+                "error": f"Gemini formatting failed, used basic formatting: {str(e)}"
+            }
+        
+    except Exception as e:
+        logger.error(f"Unexpected error in format_response endpoint: {e}", exc_info=True)
+        return {
+            "formatted_answer": request.raw_answer,  # Return original if all else fails
+            "success": False,
+            "error": f"Formatting error: {str(e)}"
+        }
+
+
+def _basic_format(text: str) -> str:
+    """Basic formatting fallback when Gemini is not available."""
+    # Split by pipe separators
+    if '|' in text and text.count('|') > 2:
+        parts = [p.strip() for p in text.split('|') if p.strip()]
+        # Format as bullet points
+        formatted = '\n'.join([f"• {part}" for part in parts])
+        return formatted
+    
+    # If no special formatting needed, return as-is
+    return text
+
+
+@router.post("/compare", response_model=ComparisonResponse)
+async def compare_rag_approaches(request: QueryRequest, fastapi_request: Request):
+    """
+    Compare Conventional RAG vs Hybrid RAG side-by-side.
+    
+    This endpoint demonstrates the difference between:
+    - Conventional RAG: Only uses vector search on text embeddings
+    - Hybrid RAG: Uses LangGraph to intelligently route between text, tables, or both
+    """
+    try:
+        import time
+        logger.info("RAG comparison endpoint called")
+        
+        # Validate query
+        query = request.query.strip()
+        if not query:
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "success": False,
+                    "query": query,
+                    "error": "Empty query provided"
+                }
+            )
+        
+        logger.info(f"Comparing RAG approaches for query: {query[:100]}...")
+        
+        # Check orchestrator availability
+        orchestrator = getattr(fastapi_request.app.state, 'orchestrator', None)
+        if orchestrator is None:
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "success": False,
+                    "query": query,
+                    "error": "Service temporarily unavailable"
+                }
+            )
+        
+        pdf_uuid = request.pdf_uuid
+        logger.info(f"Processing comparison with PDF UUID: {pdf_uuid}")
+        
+        # Run Conventional RAG (ChatbotAgent - vector search only)
+        conventional_start = time.time()
+        try:
+            conventional_result = orchestrator.chatbot_agent.answer_question(query, pdf_uuid=pdf_uuid)
+            conventional_time = time.time() - conventional_start
+            conventional_response = {
+                "answer": conventional_result.get("answer", "No answer provided"),
+                "success": conventional_result.get("success", False),
+                "processing_time": round(conventional_time, 2),
+                "method": "vector_search",
+                "description": "Uses only Pinecone vector search on text embeddings"
+            }
+        except Exception as e:
+            logger.error(f"Conventional RAG failed: {e}")
+            conventional_response = {
+                "answer": f"Error: {str(e)}",
+                "success": False,
+                "processing_time": 0,
+                "method": "vector_search",
+                "error": str(e)
+            }
+        
+        # Run Hybrid RAG (ManagerAgent - LangGraph orchestration)
+        hybrid_start = time.time()
+        hybrid_time = 0  # Initialize to avoid undefined variable error
+        try:
+            hybrid_result = orchestrator.manager_agent.process_query(query, pdf_uuid)
+            hybrid_time = time.time() - hybrid_start
+            hybrid_response = {
+                "answer": hybrid_result.get("answer", "No answer provided"),
+                "success": hybrid_result.get("success", False),
+                "processing_time": round(hybrid_time, 2),
+                "method": "langgraph_manager",
+                "query_type": hybrid_result.get("query_type", "unknown"),
+                "description": "Uses LangGraph to route between text, tables, or both intelligently"
+            }
+        except Exception as e:
+            hybrid_time = time.time() - hybrid_start  # Calculate time even on error
+            logger.error(f"Hybrid RAG failed: {e}")
+            hybrid_response = {
+                "answer": f"Error: {str(e)}",
+                "success": False,
+                "processing_time": round(hybrid_time, 2),
+                "method": "langgraph_manager",
+                "error": str(e)
+            }
+        
+        logger.info(f"Comparison complete - Conventional: {conventional_time:.2f}s, Hybrid: {hybrid_time:.2f}s")
+        
+        return {
+            "success": True,
+            "query": query,
+            "conventional_rag": conventional_response,
+            "hybrid_rag": hybrid_response,
+            "error": None
+        }
+        
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        logger.error(f"Unexpected error in compare endpoint: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "success": False,
+                "query": request.query if request else "",
                 "error": f"Internal server error: {str(e)}"
             }
         )

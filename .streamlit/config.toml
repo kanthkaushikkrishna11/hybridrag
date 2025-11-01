@@ -1,0 +1,38 @@
+# Streamlit Configuration
+# This file sets the maximum upload size and other app settings
+
+[server]
+# Maximum file upload size in MB
+maxUploadSize = 20
+
+# Server address (0.0.0.0 allows external access)
+address = "0.0.0.0"
+
+# Port to run on
+port = 8501
+
+# Enable CORS for API calls
+enableCORS = false
+
+# Enable XSRF protection
+enableXsrfProtection = true
+
+[browser]
+# Automatically open browser on startup
+gatherUsageStats = false
+
+[theme]
+# Using custom CSS, but setting base theme
+base = "light"
+primaryColor = "#667eea"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f5f7fa"
+textColor = "#1f2937"
+
+[client]
+# Show error details
+showErrorDetails = true
+
+# Toolbar mode
+toolbarMode = "minimal"
+

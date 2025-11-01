@@ -2,6 +2,15 @@
 
 A PDF document assistant with a FastAPI-based backend and a Streamlit-based frontend. The backend integrates with Google Gemini AI, Pinecone vector database, and MySQL. It allows users to upload PDF files (extracting text for vector search and tables for structured data querying) and ask questions about their content using natural language via the frontend interface. [Event bot](https://HybridRAG-table-rag-pinecone-db.streamlit.app/)
 
+## 🎯 Quick Links
+
+- 🧪 **[Testing Guide](docs/TESTING_GUIDE.md)** - 15 queries to validate Hybrid RAG
+- ⚖️ **[Fair Comparison](docs/FAIR_COMPARISON.md)** - Why comparison is valid
+- 📊 **[Ground Truth Analysis](docs/GROUND_TRUTH_ANALYSIS.md)** - Expected answers
+- 🏗️ **[Architecture](docs/ARCHITECTURE.md)** - System design
+- 📂 **[Project Structure](docs/PROJECT_STRUCTURE.md)** - File organization
+- ⚡ **[Speed Optimization](docs/SPEED_OPTIMIZATION.md)** - Performance tuning
+
 ## 📖 Table of Contents
 
 - [🚀 Features](#-features)

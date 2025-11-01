@@ -78,18 +78,23 @@ class ChatbotAgent(BaseChatbotAgent):
         """Initialize Gemini LLM client."""
         try:
             genai.configure(api_key=self.gemini_api_key)
-            self.llm = genai.GenerativeModel("gemini-2.0-flash")
+            self.llm = genai.GenerativeModel("gemini-2.5-flash")
             logger.info("Gemini LLM initialized successfully.")
         except Exception as e:
             logger.error(f"Failed to initialize Gemini: {e}")
             raise
     
     def _initialize_embeddings(self):
-        """Initialize Google embeddings for vector search."""
+        """Initialize HuggingFace embeddings for vector search (free, local)."""
         try:
-            self.embeddings = GoogleGenerativeAIEmbeddings(
-                model="models/embedding-001",
-                google_api_key=self.gemini_api_key
+            from langchain_huggingface import HuggingFaceEmbeddings
+            
+            # Use HuggingFace Sentence Transformers (runs locally, no API calls!)
+            # all-mpnet-base-v2: 768 dimensions, excellent quality, completely free
+            self.embeddings = HuggingFaceEmbeddings(
+                model_name="sentence-transformers/all-mpnet-base-v2",
+                model_kwargs={'device': 'cpu'},  # Use CPU (or 'cuda' if you have GPU)
+                encode_kwargs={'normalize_embeddings': True}  # Normalize for better similarity
             )
             
             self.vectorstore = PineconeVectorStore(
@@ -97,7 +102,7 @@ class ChatbotAgent(BaseChatbotAgent):
                 embedding=self.embeddings,
                 text_key="text"
             )
-            logger.info("Embeddings and vector store initialized successfully.")
+            logger.info("HuggingFace embeddings and vector store initialized successfully (FREE, LOCAL).")
         except Exception as e:
             logger.error(f"Failed to initialize embeddings: {e}")
             raise
@@ -105,55 +110,84 @@ class ChatbotAgent(BaseChatbotAgent):
     def _setup_prompt_template(self):
         """Setup the prompt template for the chatbot agent."""
         self.prompt_template = """
-You are a friendly Event Information Assistant named "Event Bot". Your primary purpose is to answer questions about the event described in the provided context. You can also answer questions based on user-submitted resumes if they have been provided. Follow these guidelines:
+Answer the question using ONLY the information from the context below. Be direct and concise.
 
-1. You can respond to basic greetings like "hi", "hello", or "how are you" in a warm, welcoming manner
-2. For event information or resume content, only provide details that are present in the context
-3. If information is not in the context, politely say "I'm sorry, I don't have that specific information" (for event) or "I'm sorry, I don't have that information from the resume" (for resume).
-4. Keep responses concise but conversational
-5. Do not make assumptions beyond what's explicitly stated in the context
-6. Always prioritize factual accuracy while maintaining a helpful tone
-7. Do not introduce information that isn't in the context
-8. If unsure about any information, acknowledge uncertainty rather than guess
-9. You may suggest a few general questions users might want to ask about the event
-10. Remember to maintain a warm, friendly tone in all interactions
-11. You should refer to yourself as "Event Bot"
-12. You should not greet if the user has not greeted to you
-13. Format and structure the answer properly.
+**Rules:**
+1. Provide ONLY the answer without introductions or unnecessary text
+2. Do NOT mention "Event Bot", "I'm here to help", or similar phrases
+3. If the information is not in the context, say: "I don't have that information."
+4. Keep answers brief and factual
+5. For lists, use bullet points
+6. Do NOT add extra explanations unless asked
 
-Remember: While you can be conversational, your primary role is providing accurate information based on the context provided (event details and/or resume content).
-
-Context information (event details and/or resume content):
+Context:
 {context}
 --------
 
-Now, please answer this question: {question}
-"""
+Question: {question}
 
-    def answer_question(self, question: str, top_k: int = 5, pdf_uuid: str = None) -> Dict[str, Any]:
+Answer:"""
+
+    def answer_question(self, question: str, top_k: int = None, pdf_uuid: str = None) -> Dict[str, Any]:
         """
         Answers a question using RAG (Retrieval-Augmented Generation).
         
         Args:
             question (str): The user's question.
-            top_k (int): Number of similar documents to retrieve.
+            top_k (int, optional): Number of similar documents to retrieve. If None, adapts based on query length.
             pdf_uuid (str, optional): PDF UUID to filter results.
             
         Returns:
             dict: Response containing answer text and metadata.
         """
         try:
-            logger.info(f"Processing question: {question[:100]}... with PDF UUID: {pdf_uuid}")
+            # ⚡ SPEED OPTIMIZATION: Adaptive top_k based on query complexity
+            if top_k is None:
+                query_words = len(question.split())
+                if query_words < 10:
+                    top_k = 3  # Simple queries need fewer chunks
+                elif query_words < 20:
+                    top_k = 4
+                else:
+                    top_k = 5  # Complex queries need more context
+                logger.debug(f"✅ Adaptive top_k={top_k} for query length {query_words} words")
+            
+            logger.info(f"Processing question: {question[:100]}... with PDF UUID: {pdf_uuid} (top_k={top_k})")
             
             # Apply UUID filter if provided
             if pdf_uuid:
                 filter_dict = {"pdf_uuid": pdf_uuid}
-                results = self.vectorstore.similarity_search_with_score(question, k=top_k, filter=filter_dict)
+                logger.info(f"Applying Pinecone filter: {filter_dict}")
+                try:
+                    results = self.vectorstore.similarity_search_with_score(question, k=top_k, filter=filter_dict)
+                except Exception as search_error:
+                    logger.error(f"Pinecone similarity search with filter failed: {search_error}", exc_info=True)
+                    # Try without filter as fallback
+                    logger.info("Attempting search without filter...")
+                    try:
+                        results = self.vectorstore.similarity_search_with_score(question, k=top_k)
+                    except Exception as no_filter_error:
+                        logger.error(f"Pinecone search without filter also failed: {no_filter_error}", exc_info=True)
+                        # Last resort - try simple search without scores
+                        results = [(doc, 0.0) for doc in self.vectorstore.similarity_search(question, k=top_k)]
             else:
-                results = self.vectorstore.similarity_search_with_score(question, k=top_k)
+                try:
+                    results = self.vectorstore.similarity_search_with_score(question, k=top_k)
+                except Exception as search_error:
+                    logger.error(f"Pinecone search failed: {search_error}", exc_info=True)
+                    # Fallback to simple search without scores
+                    results = [(doc, 0.0) for doc in self.vectorstore.similarity_search(question, k=top_k)]
+            
+            logger.info(f"Retrieved {len(results) if results else 0} results from Pinecone")
             
             if results:
-                context_text = "\n\n --- \n\n".join([doc.page_content for doc, _score in results])
+                # Extract content safely, handling score as either str or float
+                try:
+                    context_text = "\n\n --- \n\n".join([doc.page_content for doc, _score in results])
+                except Exception as extract_error:
+                    logger.error(f"Error extracting context: {extract_error}")
+                    # Fallback - try to extract without score
+                    context_text = "\n\n --- \n\n".join([doc.page_content if hasattr(doc, 'page_content') else str(doc) for doc in results])
                 if not context_text:
                     context_text = "No specific details found in the documents for your query."
             else:
@@ -180,10 +214,10 @@ Now, please answer this question: {question}
             
         except Exception as e:
             error_message = f"Error answering question: {str(e)}"
-            logger.error(f"Error processing question: {e}")
+            logger.error(f"Error processing question: {e}", exc_info=True)
             
             return {
-                "answer": "I'm sorry, I encountered an error while processing your question. Please try again.",
+                "answer": "I am not able to process this query. Please try uploading your PDF again or ask a simpler question.",
                 "context_found": False,
                 "num_sources": 0,
                 "success": False,

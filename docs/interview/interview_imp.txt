@@ -1,0 +1,143 @@
+**Suggested Title:** "Python Backend Developer Interview Guide: Must-Have and Nice-to-Have Questions"
+
+Alternative titles:
+- "FastAPI & Python Backend: Complete Interview Question Set (3-5 Years Experience)"
+- "Structured Interview Questions for Python Backend Developer Role"
+- "Core Python, FastAPI, and AWS: Interview Deep Dive"
+
+---
+
+Here's a structured interview question set for the Forestrat.AI Python Backend Developer (3–5 years) JD — divided into Must Have (Core) and Nice to Have (Supplementary) sections.
+🧠 MUST HAVE
+Core Python (Heavy Focus — 60%)
+Conceptual & Technical Depth
+1. Explain Python's memory management model.
+How do reference counting and garbage collection work?
+2. Difference between shallow copy and deep copy — give an example.
+3. How are mutable and immutable objects handled in function arguments?
+4. How does Python's Global Interpreter Lock (GIL) affect concurrency?
+5. Explain how iterators and generators work internally.
+6. What are closures and decorators?
+Write one practical use case for each.
+7. How do context managers (with statement) work?
+Implement one without using contextlib.
+8. Difference between multiprocessing and multithreading in Python.
+When to use which?
+9. How would you debug performance issues in Python?
+(Profilers, cProfile, memory_profiler, etc.)
+10. Explain how exceptions are propagated and best practices for handling them in production code.
+11. What is asyncio?
+When would you use async vs threads?
+12. Explain the use of typing and type hints in modern Python.
+How does it impact maintainability?
+13. How do you handle circular imports and module structuring in a large project?
+14. Describe a design pattern you've used in Python (e.g., Factory, Singleton, Observer) and why.
+FastAPI (20%)
+1. Compare FastAPI with Flask and Django — what makes FastAPI suitable for scalable microservices?
+2. How does FastAPI leverage Pydantic for validation?
+3. Explain dependency injection in FastAPI.
+4. How would you implement authentication (JWT/OAuth2) in FastAPI?
+5. How do you handle background tasks and async endpoints in FastAPI?
+6. How do you version APIs in FastAPI?
+Data Pipelines & Workflow Orchestration (10%)
+1. What is the purpose of Airflow/NiFi/Prefect in data workflows?
+2. How would you build a pipeline to ingest, clean, and transform data?
+3. How do you handle retries, task dependencies, and failure recovery in Airflow?
+4. Difference between task scheduling vs orchestration?
+5. How do you monitor data flow in production?
+AWS + Database (10%)
+1. Explain how you'd design a data storage workflow using S3, DuckDB/PostgreSQL, and AWS compute.
+2. How do you handle schema evolution in data systems like Iceberg or DuckDB?
+3. Difference between relational (PostgreSQL) and analytical (DuckDB) workloads.
+4. Explain data caching strategies in AWS-based backends.
+5. How would you secure AWS credentials and keys in code deployments?
+🌱 NICE TO HAVE
+AI & Productivity Tools
+1. How do tools like Cursor or Copilot improve developer efficiency?
+2. What AI-assisted features would you add to your IDE workflow?
+3. Explain the trade-off between model cost and performance for AI API integrations.
+4. Describe a scenario where AI-driven code suggestions improved your workflow.
+Caching / Redis
+1. When should you use Redis?
+2. Explain cache invalidation strategies (write-through, lazy, TTL).
+3. How do you handle data consistency between Redis and a persistent DB?
+Frontend / React (Basic Awareness)
+1. How would you design API endpoints to best serve a React frontend?
+2. How do you handle CORS in FastAPI?
+3. What JSON response patterns make frontend integration easier?
+Fintech Domain
+1. How do you handle sensitive data (PII) in code?
+2. How would you design transaction-safe APIs?
+3. What are some key reliability or audit requirements in financial systems?
+Would you like me to turn this into a multi-round structured interview plan (e.g., Round 1 – Python Core, Round 2 – Systems & FastAPI, Round 3 – AWS/Data, etc.) with sample expected answers for the Must-Have questions?
+1. In the code file, we are using async def.
+What is the purpose of that?
+2. Is FAST API Single or multi threaded?
+How is it achieved?
+FastAPI itself is single-threaded by default, but it's designed to work with asynchronous programming and can handle multiple concurrent requests efficiently.
+Here's what you need to know:
+FastAPI's Threading Model:
+FastAPI uses async/await to handle concurrency, not multi-threading
+When you define route handlers with async def, they run in an event loop (powered by Starlette, which uses asyncio)
+This allows a single thread to manage many concurrent requests without blocking
+In Practice:
+A single FastAPI worker process runs one event loop
+Multiple requests can be handled concurrently within that single thread through async I/O
+If one request blocks (like making a database call), the event loop can switch to handling another request while waiting for the I/O to complete
+Multiple Workers:
+While FastAPI itself is single-threaded, you typically run it with multiple worker processes (using Uvicorn, Gunicorn, etc.)
+Each worker process runs its own event loop, so you effectively get multiple concurrent streams of execution
+This is how FastAPI scales across multiple cores on a server
+Important Distinction:
+Async endpoints (async def) are non-blocking and efficient for I/O-bound operations
+Sync endpoints (def without async) can block the event loop, especially if they perform CPU-intensive work or blocking I/O
+So while FastAPI is single-threaded at the core, it's built for high concurrency through async programming, and you scale it horizontally with multiple worker processes.
+For true multi-threading within a single FastAPI process, you'd need to explicitly use Python's threading module, which isn't the recommended approach for FastAPI applications.
+3. How does Python's Global Interpreter Lock (GIL) affect concurrency?
+Python's Global Interpreter Lock (GIL) is a significant constraint on true multi-threading in Python, and it's important to understand how it affects your FastAPI application.
+What is the GIL?
+The GIL is a mutex that protects access to Python objects in CPython (the standard Python implementation).
+It ensures that only one thread can execute Python bytecode at a time, even on multi-core systems.
+This was designed to simplify memory management in CPython.
+How it affects concurrency:
+With the GIL, you cannot achieve true parallel execution of Python code across multiple threads.
+If you have multiple threads, they'll take turns executing Python bytecode rather than running simultaneously.
+This means multi-threading won't help you speed up CPU-bound tasks—only I/O-bound tasks benefit from threading.
+Good news for your FastAPI code:
+Your application uses async/await, which completely bypasses the GIL problem.
+Here's why:
+Async is not multi-threading: Async uses a single thread with an event loop.
+While one coroutine waits for I/O (database query, API call, etc.), the event loop switches to execute another coroutine.
+This is cooperative multitasking, not preemptive threading.
+No GIL contention: Since you're using a single thread per worker, there's no competition for the GIL.
+The event loop efficiently manages many concurrent operations without the overhead of thread context switching.
+I/O operations release the GIL: When your code performs I/O operations (network requests, database calls), those operations release the GIL.
+This allows any background threads to run during the I/O wait.
+When the GIL becomes a problem:
+If you were to use multi-threading in your FastAPI handlers (like threading.Thread or concurrent.futures.ThreadPoolExecutor), the GIL would limit performance for CPU-bound work.
+For example:
+python# BAD - GIL limits this
+@app.post("/bad-cpu-work")
+async def bad_cpu_work(request: Request):
+result = cpu_intensive_task()  # Blocks the event loop
+return result
+4. What is asyncio?
+When would you use async vs threads?
+5. Describe a design pattern you've used in Python (e.g., Factory, Singleton, Observer) and why.
+6. How would you debug performance issues in Python?
+(Profilers, cProfile, memory_profiler, etc.)
+Real world performance and scalability issues when we use FastAPI or when we use microservices
+
+
+ Please read about Celery
+Celery is a distributed task queue library for Python that allows you to run time-consuming tasks asynchronously and schedule them to run at specific times. It's commonly used to offload long-running operations from web applications so they don't block user requests.
+Here are the key concepts:
+Basic Idea: Instead of having your web server wait for a slow operation to complete, you send it to Celery as a task. Celery workers (separate processes or machines) pick up and execute these tasks in the background, while your application continues responding to users immediately.
+Message Broker: Celery uses a message broker (like Redis or RabbitMQ) to communicate between your application and the workers. Your app puts task messages into the broker, and workers pull them out and execute them.
+Common Use Cases:
+
+Sending emails without blocking the user's request
+Processing large files or data
+Making external API calls
+Generating reports
+Running periodic tasks on a schedule

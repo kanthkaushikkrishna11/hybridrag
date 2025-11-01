@@ -1,0 +1,1010 @@
+# 
+
+I'll extract **everything** Speaker B told you. This is comprehensive and nothing is missed.
+
+---
+
+## 🚨 BIGGEST PROBLEMS IDENTIFIED (Fix These First!)
+
+### **Problem #1: Your Answers Are TOO VERBOSE & UNCLEAR**
+
+**What Speaker B said:**
+
+```
+"You're not giving a clear answer. That's the problem I see with you.
+You're not giving a very clear answer. The answer should be clear as crystal.
+
+You are telling two verbosely. Moment you say verbosely, it gets me a feeling...
+you're wasting my time.
+
+You're explaining my code. Just explain to me. Like you're doing bad programming.
+You don't get to answer it. You should be very clear.
+
+Single shot. Single clarity in terms of what you're explaining.
+
+Nobody's going to give you grace marks for knowing it but not being able
+to explain well. Tomorrow you'll not be able to communicate clearly.
+It's a big risk for me."
+
+```
+
+**Example of what you did WRONG:**
+
+```
+Question: "Explain Pydantic in this code"
+Your answer: Talked about generic stuff, string constraints, minimum length,
+maximum length, what else we can do... wandering around
+
+What you SHOULD have said:
+"This is a Pydantic implementation where we imported BaseModel.
+For this class, we are enforcing that query is a string and
+startups is a list of strings. Want me to show you how it's
+implemented in the code?"
+
+That's it. 3 sentences. DONE.
+
+```
+
+---
+
+## 🎯 THE GOLDEN STRATEGY: ALWAYS SHOW CODE
+
+### **Speaker B's Core Instruction (Repeated 10+ Times):**
+
+```
+"Always try to show the code. Always try to show the code.
+Show the application.
+
+For EVERY small thing you should be able to say: 'If you're fine,
+I can show you the code which I've written.'
+
+The moment you show deployed application, the moment you show code,
+that's what I'm looking at.
+
+Always try to push it towards that side to say: 'This is one application
+we built.' Because you cannot show your company code. You want to show
+your project code.
+
+These guys look for stuff where people have actually DONE stuff rather
+than just talk about it."
+
+```
+
+---
+
+## 📱 YOUR INTRODUCTION STRATEGY (START WITH THIS!)
+
+### **What Speaker B Wants You to Say:**
+
+```
+When he says "Introduce yourself":
+
+"I worked at IIT [mention role], then at Walmart [mention role].
+I've worked on some interesting projects. Due to personal reasons,
+I had to relocate. I'm currently doing freelancing.
+
+One of the most beautiful applications I built recently is this one."
+
+→ IMMEDIATELY share the deployed Table Lag link
+→ Show the demo
+→ Show the LinkedIn post with video
+→ Explain your architecture contribution
+
+```
+
+**CRITICAL - What NOT to say:**
+
+```
+❌ Don't mention "current startup"
+❌ Don't say you're "working" anywhere
+❌ Don't mention Walmart letting you go
+❌ Don't give impression you'll job-hop
+
+✅ Say "freelancing" for gap period
+✅ This covers the gap without raising red flags
+✅ No one will ask for freelancing certificate
+
+```
+
+---
+
+## 💻 THE TABLE LAG PROJECT - YOUR SECRET WEAPON
+
+### **What Speaker B Instructs:**
+
+```
+1. GET IT DEPLOYED (Speaker B will help)
+   - Have the deployed link ready
+   - Show it in your introduction itself
+   - Don't wait for interviewer to ask
+
+2. SHOW THE LINKEDIN POST
+   - Speaker B tagged you in a post with demo video
+   - Go through that video end-to-end
+   - Understand what's being explained
+   - Practice explaining the same way
+
+3. MASTER THE CODE
+   - Go through entire codebase again
+   - Be rock solid on every line
+   - Any question → redirect to showing this code
+
+4. USE IT FOR EVERY ANSWER
+   Example questions and how to use Table Lag:
+
+   - "How does Fast API handle concurrency?"
+     → "Let me show you in my code. See this async def?
+        This endpoint handles concurrent requests through
+        event loop and await statements."
+
+   - "How do you use Pydantic?"
+     → "Let me show you. Ctrl+Shift+F 'BaseModel' -
+        here's where I'm using it for validation."
+
+   - "What design patterns have you used?"
+     → "Let me show you the singleton pattern in my service classes."
+
+   - "How do you handle CORS?"
+     → "Let me show you my CORS middleware implementation."
+
+```
+
+---
+
+## 🛠️ PREPARATION METHODOLOGY (EXACT STEPS)
+
+### **Speaker B's Detailed Process:**
+
+### **Step 1: Take Half Day Leave**
+
+```
+"Take half day leave. Not another world because if you want to leave there,
+I don't think it makes sense to do this.
+
+You don't have too much time. Take it. It's important because once you
+prepare all these, the important thing is about REHEARSING it also."
+
+```
+
+### **Step 2: Use Claude/ChatGPT with Your Code**
+
+```
+Speaker B demonstrates exact process:
+
+1. Open Claude
+2. Attach ALL your Table Lag code files (main.py, service.py, etc.)
+3. Take each interview question
+4. Ask Claude: "In the context of this code, can you help me answer this question?"
+
+Example Speaker B showed:
+- Attached main.py, service.py, data.py
+- Asked: "Describe design patterns used in the attached Python files"
+- Claude analyzed and showed EXACTLY where patterns are used
+- Gave real-world benefits with respect to YOUR code
+
+This way:
+✅ Your concepts get stronger
+✅ You know exactly where things are in YOUR code
+✅ You can show actual implementation
+✅ Not generic answers anymore
+
+```
+
+### **Step 3: Rehearsal Process**
+
+```
+"Each of these questions you prepare once. Next thing is REHEARSAL.
+
+Give all questions to Claude and say: 'Ask me random questions'
+
+Then Claude will ask you random questions one by one.
+
+You rehearse like how you're answering to a REAL interviewer.
+
+Practice until answers are CRYSTAL CLEAR and CONCISE."
+
+```
+
+---
+
+## 📋 INTERVIEW QUESTIONS TO PREPARE
+
+### **Speaker B shared a document with interview questions:**
+
+```
+"I'm sharing these interview questions with you.
+Go through all of them. Look at them from CODE PERSPECTIVE."
+
+```
+
+**Priority Areas (Speaker B's exact words):**
+
+### **HIGH PRIORITY - NO COMPROMISE:**
+
+- ✅ Concurrency and multi-threading
+- ✅ Performance profiling (not just debugging)
+- ✅ Fast API async/await mechanisms
+- ✅ Pydantic validation
+- ✅ Design patterns with code examples
+- ✅ Real-world scalability issues using Fast API
+- ✅ Real-world performance issues using Fast API
+
+### **MEDIUM PRIORITY:**
+
+- AWS caching strategies (know basics)
+- API versioning
+- CORS handling
+- Singleton pattern implementation
+
+### **LOW PRIORITY (5 minutes overview only):**
+
+- Data pipelines and workflow orchestration
+- DuckDB (just know: is it OLAP or OLTP?)
+- AI productivity tools
+
+**Additional Real-World Questions to Prepare:**
+
+```
+"Ask Claude/ChatGPT for real-world interview questions:
+- Real-world scalability issues using Fast API
+- Real-world performance scenarios
+- They'll give scenarios where something happened in production
+- Get those prepared also"
+
+```
+
+---
+
+## 🔧 TECHNICAL GAPS TO FIX IMMEDIATELY
+
+### **1. Concurrency & Multi-threading (CRITICAL)**
+
+**What you said WRONG:**
+
+```
+You talked about async/await but couldn't explain HOW it handles
+concurrent requests in the actual code.
+
+When shown code with async def, you couldn't pinpoint what exactly
+makes it handle 1000 concurrent requests.
+
+```
+
+**What you NEED to say:**
+
+```
+"Fast API is single-threaded by default but handles concurrency through:
+
+1. async def creates asynchronous function
+2. Event loop manages multiple concurrent requests
+3. When one request waits for I/O (database, file), event loop
+   switches to handle another request
+4. await keyword marks I/O operations
+5. For parallelism, we use multiple workers (workers=4 in uvicorn)
+
+Let me show you in my code:
+[Open Table Lag → Show async def endpoint → Show await calls]
+
+This endpoint can handle 1000+ concurrent requests because while
+one request awaits database response, event loop handles others."
+
+```
+
+**What Speaker B wants:**
+
+```
+"Past API is single-threaded by default with async/await programming
+and can handle multiple concurrent requests efficiently.
+
+In my code [show code], this async def function uses await for I/O
+operations. The event loop switches between requests during I/O wait."
+
+```
+
+---
+
+### **2. Performance Profiling (NOT Debugging)**
+
+**What you said WRONG:**
+
+```
+You talked about Python debugger (pdb) with trace functions.
+
+Speaker B: "That's general debugging. That even I know.
+But anything more advanced? That's only for debugging bugs.
+I'm looking at PERFORMANCE."
+
+```
+
+**What you NEED to know:**
+
+```
+Performance Profiling Tools:
+
+1. cProfile - Built-in profiler
+   import cProfile
+   cProfile.run('function_name()')
+   Shows time spent in each function
+
+2. line_profiler - Line-by-line profiling
+   @profile decorator
+   Shows time per line of code
+
+3. memory_profiler - Memory usage
+   Shows memory consumption per line
+
+4. py-spy - Production profiler (no code changes)
+   py-spy top --pid <process_id>
+
+5. FastAPI specific:
+   - Middleware for request timing
+   - Prometheus metrics
+   - APM tools (New Relic, DataDog)
+
+In my project: [Show if you've used any timing middleware]
+
+```
+
+---
+
+### **3. Global Interpreter Lock (GIL)**
+
+**What you said WRONG:**
+
+```
+You knew what GIL is but weren't sure about current status.
+You said "I think" too many times.
+
+```
+
+**What you NEED to say:**
+
+```
+"GIL (Global Interpreter Lock) is a mutex that allows only one thread
+to execute Python bytecode at a time. It exists for memory management
+using reference counting.
+
+Current status: As of Python 3.13, GIL is still there but can be
+DISABLED in experimental mode (PEP 703 - optional GIL).
+
+This is why we use:
+- Async/await for I/O-bound tasks (bypasses GIL)
+- Multiprocessing for CPU-bound tasks (separate processes, separate GILs)
+
+In Fast API, we primarily deal with I/O-bound operations, so async/await
+handles concurrency efficiently despite GIL."
+
+```
+
+---
+
+### **4. Design Patterns**
+
+**What you said WRONG:**
+
+```
+You mentioned singleton and dependency injection but couldn't show
+WHERE in code and WHY you used them.
+
+```
+
+**What Speaker B demonstrated:**
+
+```
+He showed you how to use Claude:
+1. Give your code to Claude
+2. Ask: "Describe design patterns used in the attached Python files"
+3. Claude will show EXACT locations where patterns are used
+
+Result for your Table Lag code:
+- Singleton Pattern: Service classes (only one instance globally)
+- Why: ML model loading once, database pool connection
+- Where: Module level instantiation in service.py
+- Benefits: Memory efficiency, shared state
+
+```
+
+**How to answer:**
+
+```
+"In my Table Lag project, I primarily used Singleton Pattern.
+
+Why: We load ML models and maintain database connections that should
+exist only once globally.
+
+Implementation: [Show service.py code where services are instantiated
+at module level]
+
+Benefits: Memory efficient - ML model loaded once, not per request.
+Connection pool shared across all requests.
+
+Want me to show the code?"
+
+```
+
+---
+
+### **5. Pydantic Validation**
+
+**What you said WRONG:**
+
+```
+You explained generically about string constraints, min/max length
+when code didn't have that.
+
+Speaker B frustrated: "Explain what you SEE. Not what else is possible."
+
+```
+
+**What you NEED to say:**
+
+```
+"Pydantic is used for data validation. Here's how:
+
+[Ctrl+Shift+F 'BaseModel' in code]
+
+1. We import BaseModel from pydantic
+2. Create class inheriting from BaseModel
+3. Define fields with types (str, List[str], etc.)
+4. Fast API automatically validates incoming requests
+
+Example in my code:
+class StartupQueryRequest(BaseModel):
+    query: str  # Enforces string type
+    startups: List[str]  # Enforces list of strings
+
+When endpoint receives request, Pydantic automatically:
+- Validates types
+- Raises 422 error if validation fails
+- Parses data correctly
+
+Want me to show where this class is used in the endpoint?"
+
+```
+
+---
+
+### **6. CORS Handling**
+
+**What you said:**
+
+```
+Okay explanation but not crisp.
+
+```
+
+**What you NEED to say:**
+
+```
+"CORS (Cross-Origin Resource Sharing) is a security mechanism that
+controls which origins can access your API.
+
+In Fast API, I use CORSMiddleware:
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://myapp.com"],  # Specific origins
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"]
+)
+
+Best practice: Don't use ["*"] for origins in production.
+Define specific allowed origins.
+
+Want me to show my implementation?"
+
+```
+
+---
+
+### **7. API Versioning**
+
+**What you said:**
+
+```
+Correct but too verbose. Lost the interviewer.
+
+```
+
+**What you NEED to say:**
+
+```
+"I use URL path versioning with separate routers:
+
+# v1 router
+v1_router = APIRouter(prefix="/api/v1", tags=["v1"])
+
+@v1_router.get("/items")
+def get_items_v1():
+    return {"version": "1.0", "items": [...]}
+
+# v2 router
+v2_router = APIRouter(prefix="/api/v2", tags=["v2"])
+
+@v2_router.get("/items")
+def get_items_v2():
+    return {"version": "2.0", "items": [...]}
+
+# Register both
+app.include_router(v1_router)
+app.include_router(v2_router)
+
+Benefits: Clear, easy to maintain, can deprecate old versions gradually.
+
+Want to see my implementation?"
+
+```
+
+---
+
+## 🎭 INTERVIEW BEHAVIOR GUIDELINES
+
+### **What NOT to Do:**
+
+```
+❌ No cheating/coding assistants during call
+❌ Don't only look at screen (gives impression of reading/cheating)
+❌ Don't say "uh", "one second", "wait sir" repeatedly
+❌ Don't thank too many times ("You don't have to thank me so many times")
+❌ Don't give verbose, wandering explanations
+❌ Don't explain generic stuff when asked about specific code
+❌ Don't waste interviewer's time
+
+```
+
+### **What TO Do:**
+
+```
+✅ Look at different places: screen, camera, sides (natural)
+✅ Look straight at camera when speaking sometimes
+✅ Say: "Please give me some time to collect my thoughts" if needed
+✅ Give single-shot, crystal-clear answers
+✅ Stick to the point
+✅ Show code immediately when explaining concepts
+✅ Use Ctrl+Shift+F to search and demonstrate in code
+✅ Structure thoughts before speaking (take the pause Speaker B offers)
+
+```
+
+**Speaker B's exact words:**
+
+```
+"You can always say 'please give me some time to collect my thoughts.'
+That's what you can say. You don't have to say 'uh' and all that because
+it doesn't... tone.
+
+Once in a while you should be looking straight. You should be looking
+straight and then answering. So that means you're not looking at only
+one place.
+
+What people do is they put a phone at the bottom and then it automatically
+gives the answer, they read and answer and you can figure it out.
+If I get a sense that person is cheating, impression just changes."
+
+```
+
+---
+
+## 📊 HOW TO STRUCTURE YOUR ANSWERS
+
+### **The Perfect Answer Format (Speaker B's Template):**
+
+```
+QUESTION: "What is Pydantic and how do you use it?"
+
+❌ WRONG WAY (What you did):
+"So Pydantic is for validation. We can do runtime checking, type checking,
+parsing, serialization... it's written in Cython with Rust... we can have
+string constraints, min length, max length... without Pydantic we need
+manual validation but with Pydantic..."
+
+[Interviewer lost interest after 10 seconds]
+
+✅ RIGHT WAY:
+"Pydantic is used for data validation and type enforcement in Fast API.
+
+[Show code immediately]
+
+Here in my code, I'm importing BaseModel. This class enforces that
+'query' must be a string and 'startups' must be a list of strings.
+
+[Ctrl+Shift+F to show usage in endpoint]
+
+Fast API automatically validates incoming requests against this model.
+
+Want me to show how it handles validation errors?"
+
+[DONE. 30 seconds. Crystal clear. With code demonstration.]
+
+```
+
+### **Answer Structure Formula:**
+
+```
+1. One sentence: What it is
+2. Show code: Where you use it
+3. One sentence: What it does in your code
+4. Offer: "Want me to show more?"
+
+Total time: 30-60 seconds maximum
+
+```
+
+---
+
+## 🚀 FINAL PREPARATION CHECKLIST
+
+### **Today/Tomorrow (Before Interview):**
+
+### **☐ IMMEDIATE (Do first 3 hours):**
+
+```
+1. ☐ Take half day leave (Speaker B: "Take it. Important.")
+
+2. ☐ Go through LinkedIn post video
+   - Watch Speaker B's demo of Table Lag
+   - Understand how he explains the architecture
+   - Note his explanation style
+
+3. ☐ Get Table Lag deployed
+   - Contact Speaker B's person to deploy it
+   - Have deployed link ready
+   - Test that demo works
+
+4. ☐ Master the Table Lag codebase
+   - Read every file line by line
+   - Understand architecture completely
+   - Be ready to explain your contribution
+
+```
+
+### **☐ PREPARATION (Next 4-5 hours):**
+
+```
+5. ☐ Use Claude with your code for each question:
+   - Open Claude
+   - Attach all Table Lag code files
+   - For EACH interview question Speaker B shared:
+     * Ask: "In the context of this code, help me answer: [question]"
+     * Note down the answer with code references
+     * Practice explaining with code
+
+6. ☐ Focus areas (NO COMPROMISE):
+   ☐ Concurrency and multi-threading with code examples
+   ☐ Performance profiling tools (cProfile, line_profiler, etc.)
+   ☐ GIL and its current status
+   ☐ Design patterns with code locations
+   ☐ Pydantic implementation details
+   ☐ Real-world scalability scenarios
+
+7. ☐ Practice Ctrl+Shift+F for quick code navigation:
+   - Search "BaseModel" → show Pydantic
+   - Search "async def" → show concurrency
+   - Search service classes → show singleton pattern
+   - Search "await" → show async operations
+
+```
+
+### **☐ REHEARSAL (Final 2 hours):**
+
+```
+8. ☐ Have Claude interview you:
+   - Give Claude all the interview questions
+   - Ask: "Act as interviewer. Ask me random questions from this list."
+   - Practice answering concisely
+   - Time yourself: answers should be 30-60 seconds + code demo
+
+9. ☐ Practice your introduction:
+   - 30 seconds background
+   - Immediately share Table Lag demo link
+   - Show deployed application
+   - Explain architecture contribution
+   - Keep it under 2 minutes total
+
+10. ☐ Practice answer structure:
+    - One sentence explanation
+    - Show code immediately
+    - One sentence what it does
+    - Offer to show more
+    - Repeat until natural
+
+```
+
+---
+
+## 💎 SPEAKER B'S GOLDEN QUOTES (Remember These)
+
+```
+1. "Always show the code. Always show the code. Show the application."
+
+2. "Single shot. Single clarity. The answer should be clear as crystal."
+
+3. "These guys look for stuff where people have actually DONE stuff
+    rather than just talk about it."
+
+4. "You should be very clear. Because tomorrow if you have to...
+    in your developer, you should be able to explain."
+
+5. "Nobody's going to give you grace marks for knowing it but not
+    being able to explain well."
+
+6. "If you are looking at a senior developer and the senior developer
+    cannot communicate, it's a big problem. It's a bad hire."
+
+7. "Just get the job done. Go crack it. That's all I care about.
+    Because getting the next opportunity and getting that interview is hard."
+
+8. "I don't want it to be because I'm wasting some of my time and
+    it shouldn't go in waste."
+
+9. "Prepare in the context of the code. That's important."
+
+10. "You're not giving a very clear answer. That's the problem I see
+     with you. You need to stick to the point."
+
+```
+
+---
+
+## 🎯 SUCCESS METRICS
+
+### **You'll Know You're Ready When:**
+
+```
+✅ You can explain any concept in 30 seconds + show code in 30 seconds
+✅ You can navigate your codebase with Ctrl+Shift+F instantly
+✅ You can redirect ANY technical question to showing your Table Lag code
+✅ You've practiced answers and they're concise and clear
+✅ You can give your introduction with demo in under 2 minutes
+✅ You don't say "uh", "I think", "one second" anymore
+✅ You ask for time to think properly: "Please give me time to collect thoughts"
+✅ You look confident because you're showing YOUR actual working code
+
+```
+
+---
+
+## ⚠️ CRITICAL WARNINGS
+
+```
+🚨 Speaker B's serious concerns:
+
+1. "If I get a sense that person is cheating, impression just changes."
+   → No coding assistants during interview
+
+2. "Tomorrow you'll not be able to communicate clearly. It's a big risk."
+   → Fix verbal communication NOW
+
+3. "Nobody's going to give you grace marks for knowing it but not explaining well."
+   → Practice until explanations are perfect
+
+4. "It's a bad hire if senior developer cannot communicate."
+   → Your career depends on communication skills
+
+5. "I'm wasting some of my time and it shouldn't go in waste."
+   → Don't take this opportunity lightly
+
+```
+
+---
+
+## 🎬 FINAL WORD FROM SPEAKER B
+
+```
+"You don't have to thank me so many times. Just get the job done.
+Go crack it. That's all I care about.
+
+Getting the next opportunity and getting that interview is hard.
+So bird in the hand is what I would say.
+
+You need to polish and practice. It will help you in your subsequent
+interviews also.
+
+Take half day leave. Prepare. Well. Get going on this."
+
+```
+
+---
+
+## ✅ YOUR ACTION PLAN (PRIORITY ORDER)
+
+### **1. TODAY - IMMEDIATELY (0-3 hours):**
+
+- [ ]  Take half day leave
+- [ ]  Watch LinkedIn post video of Table Lag demo
+- [ ]  Get Table Lag deployed (contact Speaker B's person)
+- [ ]  Re-read entire Table Lag codebase
+
+### **2. TODAY - PREPARATION (3-7 hours):**
+
+- [ ]  Use Claude + your code for all interview questions
+- [ ]  Practice concurrency, multi-threading, performance profiling
+- [ ]  Note down clear, concise answers with code references
+- [ ]  Practice Ctrl+Shift+F navigation
+
+### **3. TODAY - REHEARSAL (7-9 hours):**
+
+- [ ]  Have Claude interview you with random questions
+- [ ]  Practice introduction with demo
+- [ ]  Time your answers (30-60 seconds max)
+- [ ]  Practice until answers are crystal clear
+
+### **4. INTERVIEW DAY:**
+
+- [ ]  Have Table Lag deployed link ready
+- [ ]  Have code open and ready to share screen
+- [ ]  Remember: Look at camera, not just screen
+- [ ]  Remember: Show code for every answer
+- [ ]  Remember: Single shot, clear answers
+- [ ]  Remember: Ask for time if needed properly
+
+---
+
+**BOTTOM LINE:**
+
+Speaker B has given you the **EXACT FORMULA** to crack this interview:
+
+1. ✅ Show code, don't just talk
+2. ✅ Be crystal clear and concise
+3. ✅ Use Table Lag project as your weapon
+4. ✅ Practice until perfect
+5. ✅ Take half day to prepare properly
+
+**Now go execute. Bird in hand. Don't waste this opportunity.**
+
+Here’s a structured interview question set for the [Forestrat.AI](http://forestrat.ai/) Python Backend Developer (3–5 years) JD — divided into Must Have (Core) and Nice to Have (Supplementary) sections.
+
+---
+
+## 🧠 MUST HAVE
+
+### Core Python (Heavy Focus — 60%)
+
+Conceptual & Technical Depth
+
+1. Explain Python’s memory management model. How do reference counting and garbage collection work?
+2. Difference between shallow copy and deep copy — give an example.
+3. How are mutable and immutable objects handled in function arguments?
+4. How does Python’s Global Interpreter Lock (GIL) affect concurrency?
+5. Explain how iterators and generators work internally.
+6. What are closures and decorators? Write one practical use case for each.
+7. How do context managers (with statement) work? Implement one without using contextlib.
+8. Difference between multiprocessing and multithreading in Python. When to use which?
+9. How would you debug performance issues in Python? (Profilers, cProfile, memory_profiler, etc.)
+10. Explain how exceptions are propagated and best practices for handling them in production code.
+11. What is asyncio? When would you use async vs threads?
+12. Explain the use of typing and type hints in modern Python. How does it impact maintainability?
+13. How do you handle circular imports and module structuring in a large project?
+14. Describe a design pattern you’ve used in Python (e.g., Factory, Singleton, Observer) and why.
+
+---
+
+### FastAPI (20%)
+
+1. Compare FastAPI with Flask and Django — what makes FastAPI suitable for scalable microservices?
+2. How does FastAPI leverage Pydantic for validation?
+3. Explain dependency injection in FastAPI.
+4. How would you implement authentication (JWT/OAuth2) in FastAPI?
+5. How do you handle background tasks and async endpoints in FastAPI?
+6. How do you version APIs in FastAPI?
+
+---
+
+### Data Pipelines & Workflow Orchestration (10%)
+
+1. What is the purpose of Airflow/NiFi/Prefect in data workflows?
+2. How would you build a pipeline to ingest, clean, and transform data?
+3. How do you handle retries, task dependencies, and failure recovery in Airflow?
+4. Difference between task scheduling vs orchestration?
+5. How do you monitor data flow in production?
+
+---
+
+### AWS + Database (10%)
+
+1. Explain how you’d design a data storage workflow using S3, DuckDB/PostgreSQL, and AWS compute.
+2. How do you handle schema evolution in data systems like Iceberg or DuckDB?
+3. Difference between relational (PostgreSQL) and analytical (DuckDB) workloads.
+4. Explain data caching strategies in AWS-based backends.
+5. How would you secure AWS credentials and keys in code deployments?
+
+---
+
+## 🌱 NICE TO HAVE
+
+### AI & Productivity Tools
+
+1. How do tools like Cursor or Copilot improve developer efficiency?
+2. What AI-assisted features would you add to your IDE workflow?
+3. Explain the trade-off between model cost and performance for AI API integrations.
+4. Describe a scenario where AI-driven code suggestions improved your workflow.
+
+---
+
+### Caching / Redis
+
+1. When should you use Redis?
+2. Explain cache invalidation strategies (write-through, lazy, TTL).
+3. How do you handle data consistency between Redis and a persistent DB?
+
+---
+
+### Frontend / React (Basic Awareness)
+
+1. How would you design API endpoints to best serve a React frontend?
+2. How do you handle CORS in FastAPI?
+3. What JSON response patterns make frontend integration easier?
+
+---
+
+### Fintech Domain
+
+1. How do you handle sensitive data (PII) in code?
+2. How would you design transaction-safe APIs?
+3. What are some key reliability or audit requirements in financial systems?
+
+---
+
+Would you like me to turn this into a multi-round structured interview plan (e.g., Round 1 – Python Core, Round 2 – Systems & FastAPI, Round 3 – AWS/Data, etc.) with sample expected answers for the Must-Have questions?
+ 1. In the code file, we are using async def. What is the purpose of that?
+
+1. Is FAST API Single or multi threaded? How is it achieved?
+FastAPI itself is single-threaded by default, but it's designed to work with asynchronous programming and can handle multiple concurrent requests efficiently.
+Here's what you need to know:
+FastAPI's Threading Model:
+
+FastAPI uses async/await to handle concurrency, not multi-threading
+When you define route handlers with async def, they run in an event loop (powered by Starlette, which uses asyncio)
+This allows a single thread to manage many concurrent requests without blocking
+
+In Practice:
+
+A single FastAPI worker process runs one event loop
+Multiple requests can be handled concurrently within that single thread through async I/O
+If one request blocks (like making a database call), the event loop can switch to handling another request while waiting for the I/O to complete
+
+Multiple Workers:
+
+While FastAPI itself is single-threaded, you typically run it with multiple worker processes (using Uvicorn, Gunicorn, etc.)
+Each worker process runs its own event loop, so you effectively get multiple concurrent streams of execution
+This is how FastAPI scales across multiple cores on a server
+
+Important Distinction:
+
+Async endpoints (async def) are non-blocking and efficient for I/O-bound operations
+Sync endpoints (def without async) can block the event loop, especially if they perform CPU-intensive work or blocking I/O
+
+So while FastAPI is single-threaded at the core, it's built for high concurrency through async programming, and you scale it horizontally with multiple worker processes. For true multi-threading within a single FastAPI process, you'd need to explicitly use Python's threading module, which isn't the recommended approach for FastAPI applications.
+
+1. How does Python’s Global Interpreter Lock (GIL) affect concurrency?
+
+Python's Global Interpreter Lock (GIL) is a significant constraint on true multi-threading in Python, and it's important to understand how it affects your FastAPI application.
+What is the GIL?
+The GIL is a mutex that protects access to Python objects in CPython (the standard Python implementation). It ensures that only one thread can execute Python bytecode at a time, even on multi-core systems. This was designed to simplify memory management in CPython.
+How it affects concurrency:
+With the GIL, you cannot achieve true parallel execution of Python code across multiple threads. If you have multiple threads, they'll take turns executing Python bytecode rather than running simultaneously. This means multi-threading won't help you speed up CPU-bound tasks—only I/O-bound tasks benefit from threading.
+Good news for your FastAPI code:
+Your application uses async/await, which completely bypasses the GIL problem. Here's why:
+
+Async is not multi-threading: Async uses a single thread with an event loop. While one coroutine waits for I/O (database query, API call, etc.), the event loop switches to execute another coroutine. This is cooperative multitasking, not preemptive threading.
+No GIL contention: Since you're using a single thread per worker, there's no competition for the GIL. The event loop efficiently manages many concurrent operations without the overhead of thread context switching.
+I/O operations release the GIL: When your code performs I/O operations (network requests, database calls), those operations release the GIL. This allows any background threads to run during the I/O wait.
+
+When the GIL becomes a problem:
+If you were to use multi-threading in your FastAPI handlers (like threading.Thread or concurrent.futures.ThreadPoolExecutor), the GIL would limit performance for CPU-bound work. For example:
+python# BAD - GIL limits this
+@app.post("/bad-cpu-work")
+async def bad_cpu_work(request: Request):
+result = cpu_intensive_task()  # Blocks the event loop
+return result
+
+1. What is asyncio? When would you use async vs threads?
+2. Describe a design pattern you’ve used in Python (e.g., Factory, Singleton, Observer) and why.
+3. How would you debug performance issues in Python? (Profilers, cProfile, memory_profiler, etc.)
+
+Real world performance and scalability issues when we use FastAPI or when we use microservices
+
+https://www.linkedin.com/posts/vijenderp_one-of-those-days-when-you-feel-like-awesome-activity-7369365730267451394-BYB-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAFP7HsBhpE9a_7aMj1k0zoXsWJ7MxnJm-w

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LOCAL_SETUP_GUIDE.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%F0%9F%9A%80-hybrid-rag---local-setup-guide">🚀 HYBRID RAG - LOCAL SETUP GUIDE</h1>
+<h2 id="%F0%9F%93%8B-prerequisites">📋 PREREQUISITES</h2>
+<h3 id="required-accounts--api-keys"><strong>Required Accounts &amp; API Keys</strong></h3>
+<ol>
+<li>
+<p><strong>Google Gemini AI</strong></p>
+<ul>
+<li>Sign up: https://makersuite.google.com/</li>
+<li>Get API key: https://makersuite.google.com/app/apikey</li>
+<li>Free tier: 60 requests/minute</li>
+</ul>
+</li>
+<li>
+<p><strong>Pinecone (Vector Database)</strong></p>
+<ul>
+<li>Sign up: https://www.pinecone.io/</li>
+<li>Free tier: 1 index, 100K vectors</li>
+<li>Create index with dimension=768</li>
+</ul>
+</li>
+<li>
+<p><strong>Supabase (PostgreSQL)</strong></p>
+<ul>
+<li>Sign up: https://supabase.com/</li>
+<li>Free tier: 500MB database, 2GB bandwidth</li>
+<li>Get connection details from Settings &gt; Database</li>
+</ul>
+</li>
+</ol>
+<h3 id="system-requirements"><strong>System Requirements</strong></h3>
+<ul>
+<li><strong>Python:</strong> 3.9+ (preferably 3.10 or 3.11)</li>
+<li><strong>OS:</strong> macOS, Linux, or Windows</li>
+<li><strong>RAM:</strong> Minimum 4GB (8GB recommended)</li>
+<li><strong>Disk Space:</strong> 500MB for dependencies</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%9B%A0%EF%B8%8F-step-by-step-setup">🛠️ STEP-BY-STEP SETUP</h2>
+<h3 id="step-1-clone-and-navigate-to-project"><strong>Step 1: Clone and Navigate to Project</strong></h3>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> /Users/krishnakaushik/hybridrag/HybridRAG
+</div></code></pre>
+<hr>
+<h3 id="step-2-create-virtual-environment"><strong>Step 2: Create Virtual Environment</strong></h3>
+<p><strong>Option A: Using make (recommended)</strong></p>
+<pre class="hljs"><code><div>make venv
+<span class="hljs-built_in">source</span> venv/bin/activate  <span class="hljs-comment"># macOS/Linux</span>
+<span class="hljs-comment"># OR</span>
+venv\Scripts\activate  <span class="hljs-comment"># Windows</span>
+</div></code></pre>
+<p><strong>Option B: Manual</strong></p>
+<pre class="hljs"><code><div>python3 -m venv venv
+<span class="hljs-built_in">source</span> venv/bin/activate  <span class="hljs-comment"># macOS/Linux</span>
+</div></code></pre>
+<p><strong>Verify activation:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-built_in">which</span> python  <span class="hljs-comment"># Should point to venv/bin/python</span>
+python --version  <span class="hljs-comment"># Should be 3.9+</span>
+</div></code></pre>
+<hr>
+<h3 id="step-3-install-dependencies"><strong>Step 3: Install Dependencies</strong></h3>
+<pre class="hljs"><code><div>make install
+</div></code></pre>
+<p>This installs:</p>
+<ul>
+<li>FastAPI, Uvicorn (backend)</li>
+<li>Streamlit (frontend)</li>
+<li>Google Generative AI, Pinecone, LangChain (AI)</li>
+<li>SQLAlchemy, psycopg2 (database)</li>
+<li>PDFPlumber (PDF processing)</li>
+<li>Pytest, Black, Flake8 (dev tools)</li>
+</ul>
+<p><strong>Verify installation:</strong></p>
+<pre class="hljs"><code><div>pip list | grep fastapi
+pip list | grep streamlit
+pip list | grep google-generativeai
+</div></code></pre>
+<hr>
+<h3 id="step-4-configure-environment-variables"><strong>Step 4: Configure Environment Variables</strong></h3>
+<p><strong>A. Copy template:</strong></p>
+<pre class="hljs"><code><div>cp .env.example .env
+</div></code></pre>
+<p><strong>B. Edit <code>.env</code> file:</strong></p>
+<pre class="hljs"><code><div>nano .env  <span class="hljs-comment"># or use your preferred editor</span>
+</div></code></pre>
+<p><strong>C. Fill in your credentials:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># ===== GOOGLE GEMINI AI =====</span>
+GEMINI_API_KEY=AIzaSyCxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+GEMINI_MODEL=gemini-1.5-pro-latest
+
+<span class="hljs-comment"># ===== PINECONE =====</span>
+PINECONE_API_KEY=pcsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+PINECONE_INDEX_NAME=hybridrag-index
+PINECONE_ENVIRONMENT=gcp-starter
+
+<span class="hljs-comment"># ===== SUPABASE (POSTGRESQL) =====</span>
+DATABASE_HOST=db.xxxxxxxxxxxxxxxxxxxx.supabase.co
+DATABASE_PORT=5432
+DATABASE_USER=postgres
+DATABASE_PASSWORD=your_password_here
+DATABASE_NAME=postgres
+
+<span class="hljs-comment"># ===== FASTAPI SERVER =====</span>
+HOST=0.0.0.0
+PORT=8000
+DEBUG=True
+
+<span class="hljs-comment"># ===== STREAMLIT FRONTEND =====</span>
+ENDPOINT=http://localhost:8000
+</div></code></pre>
+<p><strong>D. Verify configuration:</strong></p>
+<pre class="hljs"><code><div>python -c <span class="hljs-string">"from src.backend.config import Config; c = Config(); print('✅ Config loaded successfully')"</span>
+</div></code></pre>
+<hr>
+<h3 id="step-5-set-up-external-services"><strong>Step 5: Set Up External Services</strong></h3>
+<h4 id="a-pinecone-index-setup"><strong>A. Pinecone Index Setup</strong></h4>
+<ol>
+<li>
+<p><strong>Log in to Pinecone:</strong> https://app.pinecone.io/</p>
+</li>
+<li>
+<p><strong>Create new index:</strong></p>
+<ul>
+<li>Name: <code>hybridrag-index</code></li>
+<li>Dimensions: <code>768</code> (for Gemini embeddings)</li>
+<li>Metric: <code>cosine</code></li>
+<li>Pod Type: Starter (free tier)</li>
+</ul>
+</li>
+<li>
+<p><strong>Get API key:</strong></p>
+<ul>
+<li>Go to API Keys section</li>
+<li>Copy your API key</li>
+<li>Add to <code>.env</code> as <code>PINECONE_API_KEY</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="b-supabase-database-setup"><strong>B. Supabase Database Setup</strong></h4>
+<ol>
+<li>
+<p><strong>Log in to Supabase:</strong> https://supabase.com/dashboard</p>
+</li>
+<li>
+<p><strong>Create new project:</strong></p>
+<ul>
+<li>Choose region closest to you</li>
+<li>Set database password (save it!)</li>
+<li>Wait for provisioning (~2 minutes)</li>
+</ul>
+</li>
+<li>
+<p><strong>Get connection details:</strong></p>
+<ul>
+<li>Go to Settings &gt; Database</li>
+<li>Scroll to &quot;Connection string&quot;</li>
+<li>Copy these values to <code>.env</code>:
+<ul>
+<li>Host: <code>db.xxxxxxxxxxxxxxxxxxxx.supabase.co</code></li>
+<li>Password: Your database password</li>
+<li>Port: <code>5432</code></li>
+<li>Database: <code>postgres</code></li>
+<li>User: <code>postgres</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Test connection:</strong></p>
+</li>
+</ol>
+<pre class="hljs"><code><div>psql <span class="hljs-string">"postgresql://postgres:your_password@db.xxxxxxxxxxxxxxxxxxxx.supabase.co:5432/postgres"</span>
+<span class="hljs-comment"># Should connect successfully</span>
+\q  <span class="hljs-comment"># to quit</span>
+</div></code></pre>
+<h4 id="c-google-gemini-ai-setup"><strong>C. Google Gemini AI Setup</strong></h4>
+<ol>
+<li><strong>Get API key:</strong> https://makersuite.google.com/app/apikey</li>
+<li><strong>Enable Gemini API:</strong>
+<ul>
+<li>Click &quot;Get API Key&quot;</li>
+<li>Create new key or use existing</li>
+</ul>
+</li>
+<li><strong>Test API key:</strong></li>
+</ol>
+<pre class="hljs"><code><div>curl -X POST <span class="hljs-string">"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_API_KEY"</span> \
+  -H <span class="hljs-string">"Content-Type: application/json"</span> \
+  -d <span class="hljs-string">'{"contents":[{"parts":[{"text":"Hello"}]}]}'</span>
+<span class="hljs-comment"># Should return a response</span>
+</div></code></pre>
+<hr>
+<h3 id="step-6-verify-database-schema"><strong>Step 6: Verify Database Schema</strong></h3>
+<p>The application will auto-create tables when you upload your first PDF, but you can verify the connection:</p>
+<pre class="hljs"><code><div>python -c <span class="hljs-string">"
+from src.backend.config import Config
+import psycopg2
+
+config = Config()
+conn = psycopg2.connect(config.database_url)
+print('✅ Database connection successful')
+conn.close()
+"</span>
+</div></code></pre>
+<hr>
+<h3 id="step-7-start-the-backend-server"><strong>Step 7: Start the Backend Server</strong></h3>
+<p><strong>Option A: Using make (recommended)</strong></p>
+<pre class="hljs"><code><div>make run-backend
+</div></code></pre>
+<p><strong>Option B: Direct uvicorn</strong></p>
+<pre class="hljs"><code><div>uvicorn app:app --reload --host 0.0.0.0 --port 8000
+</div></code></pre>
+<p><strong>Expected output:</strong></p>
+<pre class="hljs"><code><div>INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [12345] using StatReload
+INFO:     Started server process [12346]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+</div></code></pre>
+<p><strong>Test backend:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># In a new terminal</span>
+curl http://localhost:8000/
+<span class="hljs-comment"># Should return: {"message": "PDF Assistant API", ...}</span>
+
+curl http://localhost:8000/health
+<span class="hljs-comment"># Should return: {"status": "healthy", "services": {...}}</span>
+</div></code></pre>
+<hr>
+<h3 id="step-8-start-the-frontend-streamlit"><strong>Step 8: Start the Frontend (Streamlit)</strong></h3>
+<p><strong>In a new terminal:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Activate venv</span>
+<span class="hljs-built_in">source</span> venv/bin/activate
+
+<span class="hljs-comment"># Start Streamlit</span>
+make run-frontend
+</div></code></pre>
+<p><strong>Expected output:</strong></p>
+<pre class="hljs"><code><div>  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://192.168.x.x:8501
+</div></code></pre>
+<p><strong>Access the app:</strong> http://localhost:8501</p>
+<hr>
+<h3 id="step-9-test-the-full-pipeline"><strong>Step 9: Test the Full Pipeline</strong></h3>
+<h4 id="a-upload-a-pdf"><strong>A. Upload a PDF</strong></h4>
+<ol>
+<li><strong>Open Streamlit:</strong> http://localhost:8501</li>
+<li><strong>Upload test PDF:</strong> Use <code>The FIFA World Cup_ A Historical Journey-1.pdf</code></li>
+<li><strong>Wait for processing:</strong> Should see progress bars</li>
+<li><strong>Check summary:</strong> Should show:
+<ul>
+<li>✅ Text chunks stored in Pinecone</li>
+<li>✅ Tables stored in PostgreSQL</li>
+<li>✅ Schemas generated</li>
+</ul>
+</li>
+</ol>
+<h4 id="b-test-text-only-query"><strong>B. Test Text-Only Query</strong></h4>
+<p><strong>Query:</strong> &quot;What was the host nation for the first World Cup?&quot;</p>
+<p><strong>Expected Flow:</strong></p>
+<ol>
+<li>Manager Agent classifies as &quot;rag&quot;</li>
+<li>RAG Agent searches Pinecone</li>
+<li>Returns: &quot;Uruguay was chosen as the first host nation in 1930.&quot;</li>
+</ol>
+<p><strong>Test via API:</strong></p>
+<pre class="hljs"><code><div>curl -X POST http://localhost:8000/answer \
+  -H <span class="hljs-string">"Content-Type: application/json"</span> \
+  -d <span class="hljs-string">'{
+    "query": "What was the host nation for the first World Cup?",
+    "pdf_uuid": "YOUR_PDF_UUID_FROM_UPLOAD"
+  }'</span>
+</div></code></pre>
+<h4 id="c-test-table-only-query"><strong>C. Test Table-Only Query</strong></h4>
+<p><strong>Query:</strong> &quot;How many World Cup matches ended in a draw?&quot;</p>
+<p><strong>Expected Flow:</strong></p>
+<ol>
+<li>Manager Agent classifies as &quot;table&quot;</li>
+<li>Table Agent generates SQL: <code>SELECT COUNT(*) WHERE home_score = away_score</code></li>
+<li>Executes on PostgreSQL</li>
+<li>Returns: &quot;14 matches ended in a draw.&quot;</li>
+</ol>
+<h4 id="d-test-hybrid-query"><strong>D. Test Hybrid Query</strong></h4>
+<p><strong>Query:</strong> &quot;How many times did Brazil win the World Cup and what leagues exist in Europe?&quot;</p>
+<p><strong>Expected Flow:</strong></p>
+<ol>
+<li>Manager Agent classifies as &quot;both&quot;</li>
+<li>Splits into sub-queries:
+<ul>
+<li>Table: &quot;How many times did Brazil win?&quot;</li>
+<li>RAG: &quot;What European leagues exist?&quot;</li>
+</ul>
+</li>
+<li>Table Agent: Queries PostgreSQL → &quot;5 times&quot;</li>
+<li>RAG Agent: Searches Pinecone → &quot;Premier League, La Liga...&quot;</li>
+<li>Combiner Agent: Merges both responses</li>
+</ol>
+<hr>
+<h3 id="step-10-verify-data-storage"><strong>Step 10: Verify Data Storage</strong></h3>
+<h4 id="a-check-pinecone-vectors"><strong>A. Check Pinecone Vectors</strong></h4>
+<pre class="hljs"><code><div>python -c <span class="hljs-string">"
+from pinecone import Pinecone
+import os
+
+pc = Pinecone(api_key=os.getenv('PINECONE_API_KEY'))
+index = pc.Index('hybridrag-index')
+stats = index.describe_index_stats()
+print(f'✅ Total vectors: {stats.total_vector_count}')
+"</span>
+</div></code></pre>
+<h4 id="b-check-postgresql-tables"><strong>B. Check PostgreSQL Tables</strong></h4>
+<pre class="hljs"><code><div>psql <span class="hljs-string">"postgresql://postgres:your_password@db.xxxxxxxxxxxxxxxxxxxx.supabase.co:5432/postgres"</span> -c <span class="hljs-string">"\dt"</span>
+<span class="hljs-comment"># Should show dynamically created tables like: pdf_abc123_world_cup</span>
+</div></code></pre>
+<h4 id="c-check-tableschemajson"><strong>C. Check table_schema.json</strong></h4>
+<pre class="hljs"><code><div>cat src/backend/utils/table_schema.json
+<span class="hljs-comment"># Should show generated schemas</span>
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%A7%AA-troubleshooting">🧪 TROUBLESHOOTING</h2>
+<h3 id="issue-1-%22modulenotfounderror-no-module-named-src%22"><strong>Issue 1: &quot;ModuleNotFoundError: No module named 'src'&quot;</strong></h3>
+<p><strong>Solution:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-built_in">export</span> PYTHONPATH=$(<span class="hljs-built_in">pwd</span>)
+<span class="hljs-comment"># Add to ~/.zshrc or ~/.bashrc:</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"export PYTHONPATH=<span class="hljs-variable">$(pwd)</span>"</span> &gt;&gt; ~/.zshrc
+</div></code></pre>
+<hr>
+<h3 id="issue-2-%22connection-to-database-failed%22"><strong>Issue 2: &quot;Connection to database failed&quot;</strong></h3>
+<p><strong>Diagnosis:</strong></p>
+<pre class="hljs"><code><div>psql <span class="hljs-string">"postgresql://postgres:your_password@db.xxxxxxxxxxxxxxxxxxxx.supabase.co:5432/postgres"</span>
+</div></code></pre>
+<p><strong>Possible causes:</strong></p>
+<ul>
+<li>❌ Wrong password in <code>.env</code></li>
+<li>❌ Supabase project paused (free tier)</li>
+<li>❌ IP address not whitelisted (check Supabase &gt; Settings &gt; Database &gt; Connection Pooling)</li>
+</ul>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Verify credentials in Supabase dashboard</li>
+<li>Restart Supabase project if paused</li>
+<li>Add your IP to allowlist</li>
+</ul>
+<hr>
+<h3 id="issue-3-%22pinecone-index-not-found%22"><strong>Issue 3: &quot;Pinecone index not found&quot;</strong></h3>
+<p><strong>Solution:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Check index name in Pinecone dashboard</span>
+<span class="hljs-comment"># Update PINECONE_INDEX_NAME in .env</span>
+<span class="hljs-comment"># Restart backend server</span>
+</div></code></pre>
+<hr>
+<h3 id="issue-4-%22gemini-api-quota-exceeded%22"><strong>Issue 4: &quot;Gemini API quota exceeded&quot;</strong></h3>
+<p><strong>Error:</strong> <code>429 Too Many Requests</code></p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Free tier: 60 requests/minute</li>
+<li>Wait 1 minute between tests</li>
+<li>Consider upgrading to paid tier</li>
+</ul>
+<hr>
+<h3 id="issue-5-%22port-8000-already-in-use%22"><strong>Issue 5: &quot;Port 8000 already in use&quot;</strong></h3>
+<p><strong>Solution:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Find process using port</span>
+lsof -ti:8000
+<span class="hljs-comment"># Kill process</span>
+<span class="hljs-built_in">kill</span> -9 $(lsof -ti:8000)
+<span class="hljs-comment"># Or use different port</span>
+PORT=8001 make run-backend
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%8E%AF-common-commands">🎯 COMMON COMMANDS</h2>
+<pre class="hljs"><code><div><span class="hljs-comment"># Start backend</span>
+make run-backend
+
+<span class="hljs-comment"># Start frontend</span>
+make run-frontend
+
+<span class="hljs-comment"># Run both (parallel)</span>
+make run-all
+
+<span class="hljs-comment"># Test health</span>
+curl http://localhost:8000/health
+
+<span class="hljs-comment"># View logs (backend)</span>
+tail -f logs/app.log
+
+<span class="hljs-comment"># Clean cache</span>
+make clean
+
+<span class="hljs-comment"># Run tests</span>
+make <span class="hljs-built_in">test</span>
+
+<span class="hljs-comment"># Lint code</span>
+make lint
+
+<span class="hljs-comment"># Format code</span>
+make format
+
+<span class="hljs-comment"># Data management</span>
+make data-summary        <span class="hljs-comment"># View current data</span>
+make clear-data          <span class="hljs-comment"># Clear all data (with confirmation)</span>
+make data-manager        <span class="hljs-comment"># Interactive menu</span>
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%93%8A-data-management">📊 DATA MANAGEMENT</h2>
+<h3 id="view-current-data"><strong>View Current Data</strong></h3>
+<pre class="hljs"><code><div>make data-summary
+</div></code></pre>
+<p><strong>Output:</strong></p>
+<pre class="hljs"><code><div>📊 Current Data Summary:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 Pinecone Vectors:
+  • Total vectors: 1,234
+  • Namespaces: default
+
+🗄️  PostgreSQL Tables:
+  • pdf_abc123_world_cup (25 rows)
+  • pdf_def456_revenue_data (102 rows)
+</div></code></pre>
+<hr>
+<h3 id="clear-all-data"><strong>Clear All Data</strong></h3>
+<pre class="hljs"><code><div>make clear-data
+</div></code></pre>
+<p><strong>Confirmation prompt:</strong></p>
+<pre class="hljs"><code><div>⚠️  WARNING: This will delete ALL data!
+  • Pinecone: All vectors
+  • PostgreSQL: All tables
+  • Schemas: table_schema.json
+
+Type 'yes' to confirm:
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%94%8D-debugging">🔍 DEBUGGING</h2>
+<h3 id="enable-debug-logging"><strong>Enable Debug Logging</strong></h3>
+<p>In <code>.env</code>:</p>
+<pre class="hljs"><code><div>DEBUG=True
+LOG_LEVEL=DEBUG
+</div></code></pre>
+<h3 id="check-application-logs"><strong>Check Application Logs</strong></h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Backend logs</span>
+tail -f logs/app.log
+
+<span class="hljs-comment"># Uvicorn logs</span>
+tail -f logs/uvicorn.log
+</div></code></pre>
+<h3 id="test-individual-components"><strong>Test Individual Components</strong></h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Test RAG Agent</span>
+python -c <span class="hljs-string">"
+from src.backend.agents.rag_agent import ChatbotAgent
+agent = ChatbotAgent()
+result = agent.answer_question('What is the capital of France?')
+print(result)
+"</span>
+
+<span class="hljs-comment"># Test Table Agent</span>
+python -c <span class="hljs-string">"
+from src.backend.agents.table_agent import TableAgent
+agent = TableAgent()
+result = agent.process_query('Count all records', 'your_pdf_uuid')
+print(result)
+"</span>
+
+<span class="hljs-comment"># Test Manager Agent</span>
+python src/backend/test_manager_agent.py
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%93%9A-next-steps">📚 NEXT STEPS</h2>
+<ol>
+<li><strong>Read the architecture:</strong> <code>ARCHITECTURE_DEEP_DIVE.md</code></li>
+<li><strong>Prepare for interview:</strong> <code>INTERVIEW_PREP_GUIDE.md</code></li>
+<li><strong>Explore codebase:</strong> Start with <code>src/backend/__init__.py</code></li>
+<li><strong>Run tests:</strong> <code>make test</code></li>
+<li><strong>Try custom PDFs:</strong> Upload your own documents</li>
+</ol>
+<hr>
+<h2 id="%F0%9F%86%98-getting-help">🆘 GETTING HELP</h2>
+<ul>
+<li><strong>Documentation:</strong> Check <code>docs/</code> folder</li>
+<li><strong>API Reference:</strong> http://localhost:8000/docs (when server running)</li>
+<li><strong>Logs:</strong> <code>logs/app.log</code></li>
+<li><strong>GitHub Issues:</strong> Create issue in repository</li>
+</ul>
+<hr>
+<h2 id="%E2%9C%85-success-checklist">✅ SUCCESS CHECKLIST</h2>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">Virtual environment created and activated</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Dependencies installed (</label><code>pip list</code> shows all packages)</li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2"></label><code>.env</code> file configured with valid credentials</li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">Pinecone index created (dimension=768)</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">Supabase database accessible</label></li>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5">Gemini API key working</label></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6">Backend server starts without errors</label></li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7">Frontend loads at http://localhost:8501</label></li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">Health check returns &quot;healthy&quot;</label></li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9">PDF upload works</label></li>
+<li><input type="checkbox" id="checkbox10"><label for="checkbox10">Text queries return answers</label></li>
+<li><input type="checkbox" id="checkbox11"><label for="checkbox11">Table queries execute SQL</label></li>
+<li><input type="checkbox" id="checkbox12"><label for="checkbox12">Hybrid queries combine responses</label></li>
+</ul>
+<hr>
+<p><strong>🎉 Congratulations! Your Hybrid RAG system is now running locally!</strong></p>
+<p><em>For interview preparation, review <code>INTERVIEW_PREP_GUIDE.md</code> with project-specific examples.</em></p>
+
+</body>
+</html>

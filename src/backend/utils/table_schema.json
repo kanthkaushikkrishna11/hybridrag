@@ -1,7 +1,7 @@
 {
-  "pdf_40c67bba_world_cup_matches": {
+  "pdf_2bc06d56_world_cup_matches": {
     "schema": {
-      "match_ID": "integer",
+      "match_id": "integer",
       "year": "integer",
       "round": "string",
       "home_team": "string",
@@ -10,80 +10,15 @@
       "away_score": "integer",
       "winner": "string"
     },
-    "description": "This table, `pdf_40c67bba_world_cup_matches`, stores data on World Cup matches.  It contains information about each match, including the year, round, home and away teams, scores, and the winning team (or \"Draw\").  The table is suitable for queries retrieving match details based on year, round, team names, or scores.  The `match_ID` column serves as a unique identifier for each match.  The data spans multiple World Cups, as evidenced by the `year` column.",
-    "pdf_uuid": "40c67bba",
-    "created_at": "2025-09-03T08:20:57.484934",
+    "description": "**pdf_2bc06d56_world_cup_matches**: This table contains detailed records of individual football (soccer) matches played in FIFA World Cup tournaments. Use it to query match details, scores, participating teams, tournament `year`s, and `round`s. Key columns include `home_team`, `away_team`, `home_score`, `away_score`, and the `winner` (which can be 'Draw'). The data primarily covers World Cup matches from 1930 to 1978.",
+    "pdf_uuid": "2bc06d56",
+    "created_at": "2025-11-01T02:59:57.819133",
     "status": "complete",
     "rows_stored": 100
   },
-  "pdf_d6739fde_world_cup_match_results": {
+  "pdf_a9d29ef9_world_cup_matches": {
     "schema": {
-      "match_ID": "integer",
-      "year": "integer",
-      "round": "string",
-      "home_team": "string",
-      "away_team": "string",
-      "home_score": "integer",
-      "away_score": "integer",
-      "winner": "string"
-    },
-    "description": "This table, `pdf_d6739fde_world_cup_match_results`, stores data on World Cup match results.  It contains information for approximately 100 matches.  Each row represents a single match, with columns specifying the `match_ID`, `year`, `round` of the tournament, the `home_team`, `away_team`, their respective `home_score` and `away_score`, and the `winner` (or \"Draw\").  All scores are integers.  Team names are text strings. The `year` and `match_ID` fields can be used for unique identification of a match.  Use this table to answer questions about specific World Cup matches, including scores, participating teams, and the winning team for a given match or year.",
-    "pdf_uuid": "d6739fde",
-    "created_at": "2025-09-03T11:03:01.425445",
-    "status": "complete",
-    "rows_stored": 100
-  },
-  "pdf_0965c597_player_statistics": {
-    "schema": {
-      "player_name": "string",
-      "position": "string",
-      "team": "string",
-      "salary": "integer",
-      "tackles": "integer",
-      "interceptions": "integer",
-      "sacks": "integer",
-      "touchdowns": "integer"
-    },
-    "description": "TBD",
-    "pdf_uuid": "0965c597",
-    "created_at": "2025-09-03T11:14:31.764323",
-    "status": "processing"
-  },
-  "pdf_0965c597_nfl_player_stats": {
-    "schema": {
-      "player_name": "string",
-      "position": "string",
-      "team": "string",
-      "games_played": "integer",
-      "interceptions": "integer",
-      "sacks": "float",
-      "fumbles_recovered": "integer",
-      "special_teams_tackles": "integer"
-    },
-    "description": "This table, `pdf_0965c597_nfl_player_stats`, contains NFL player statistics.  It's useful for querying information about individual players or comparing players based on various metrics.  Columns include player name (`player_name`), position (`position`), team (`team`), games played (`games_played`), interceptions (`interceptions`), sacks (`sacks`), fumbles recovered (`fumbles_recovered`), and special teams tackles (`special_teams_tackles`).  The data is limited to a sample of players and may not represent the entire NFL player population. Use this table when you need to retrieve or analyze data on specific players' performance across different statistical categories.  Note that some data (e.g., team names) may be abbreviated in the source data.",
-    "pdf_uuid": "0965c597",
-    "created_at": "2025-09-03T11:14:22.229766",
-    "status": "complete",
-    "rows_stored": 14
-  },
-  "pdf_0965c597_nfl_rushing_leaders": {
-    "schema": {
-      "rank": "integer",
-      "player": "string",
-      "team_by_season": "text",
-      "carries": "integer",
-      "yards": "integer",
-      "average": "float"
-    },
-    "description": "This table, `pdf_0965c597_nfl_rushing_leaders`, contains historical data on the top NFL rushing leaders.  It lists each player's rank, name, teams played for (across multiple seasons, often spanning years), total carries, total rushing yards, and average yards per carry.  The data is somewhat messy, with inconsistent formatting in the `team_by_season` column. Queries should account for this potential data inconsistency.  Use this table to answer questions about NFL rushing statistics for the players listed.  The `rank` column can be used for ordering results.  Numerical columns (`carries`, `yards`, `average`) can be used for filtering and aggregation.",
-    "pdf_uuid": "0965c597",
-    "created_at": "2025-09-03T11:14:34.575536",
-    "status": "complete",
-    "rows_stored": 20
-  },
-  "pdf_85945469_world_cup_match_results": {
-    "schema": {
-      "match_ID": "integer",
+      "Match_ID": "integer",
       "Year": "integer",
       "Round": "string",
       "Home_Team": "string",
@@ -92,13 +27,13 @@
       "Away_Score": "integer",
       "Winner": "string"
     },
-    "description": "This table, `pdf_85945469_world_cup_match_results`, stores data on World Cup match results.  It contains information for approximately 100 matches.  Use this table to answer queries about specific matches, teams, scores, winners, and rounds played in past World Cups.  The table's columns provide details such as match ID (`match_ID`), year (`Year`), round of the tournament (`Round`), home and away teams (`Home_Team`, `Away_Team`), scores (`Home_Score`, `Away_Score`), and the match winner (`Winner`).  The data spans multiple years, starting from 1930, and includes group stage and later rounds. The surrounding text indicates that this is a chronological listing of matches.",
-    "pdf_uuid": "85945469",
-    "created_at": "2025-09-03T11:17:24.912253",
+    "description": "This table, `pdf_a9d29ef9_world_cup_matches`, contains detailed records of individual football matches from various World Cup tournaments. Each entry includes the `Year` of the match, the `Round` it occurred in, the `Home_Team` and `Away_Team` involved, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw'). Use this table to answer questions about specific match results, team performances, scores, and tournament stages across different World Cup years.",
+    "pdf_uuid": "a9d29ef9",
+    "created_at": "2025-11-01T06:09:33.351885",
     "status": "complete",
     "rows_stored": 100
   },
-  "pdf_c20081b6_world_cup_match_results": {
+  "pdf_0a104d1a_match_results": {
     "schema": {
       "match_id": "integer",
       "year": "integer",
@@ -109,30 +44,380 @@
       "away_score": "integer",
       "winner": "string"
     },
-    "description": "This table, `pdf_c20081b6_world_cup_match_results`, stores data on World Cup match results.  It contains information for each match, including the `match_id`, `year`, `round` of the tournament, the `home_team` and `away_team`, their respective `home_score` and `away_score`, and the `winner` of the match.  All scores are integer values.  The table is suitable for queries retrieving match details based on year, round, team participation, or scores.  The data spans multiple World Cup years, as evidenced by the sample data ranging from 1930 to 1978.  The surrounding text suggests this table contains historical World Cup match results.",
-    "pdf_uuid": "c20081b6",
-    "created_at": "2025-09-03T11:59:24.918314",
+    "description": "The `pdf_0a104d1a_match_results` table stores comprehensive details for individual football/soccer matches. Each entry includes a unique `match_id`, the `year` the match occurred, the specific `round` of the competition (e.g., 'Group 1', 'Semi-final', 'Round of 16'), the `home_team` and `away_team`, their respective `home_score` and `away_score`, and the `winner` of the match. The `winner` column will contain 'Draw' if the match ended in a tie. Use this table for queries that require historical match outcomes, scores, participating teams, and the results of games from specific years or competition stages.",
+    "pdf_uuid": "0a104d1a",
+    "created_at": "2025-11-01T06:37:55.581938",
     "status": "complete",
-    "rows_stored": 100
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
   },
-  "pdf_cec71391_world_cup_match_results": {
+  "pdf_f835e9b7_world_cup_matches": {
     "schema": {
-      "match_ID": "integer",
-      "year": "integer",
-      "round": "string",
-      "home_team": "string",
-      "away_team": "string",
-      "home_score": "integer",
-      "away_score": "integer",
-      "winner": "string"
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
     },
-    "description": "This table, `pdf_cec71391_world_cup_match_results`, stores data on World Cup match results.  It contains information for approximately 100 matches.  Each row represents a single match with the following columns:\n\n* **match_ID:** Unique identifier for each match (INT).\n* **year:** Year the match was played (INT).\n* **round:** Stage of the tournament (e.g., \"Group 1\", \"Semi-final\") (VARCHAR).\n* **home_team:** Name of the home team (VARCHAR).\n* **away_team:** Name of the away team (VARCHAR).\n* **home_score:** Score of the home team (INT).\n* **away_score:** Score of the away team (INT).\n* **winner:** Name of the winning team (\"Draw\" if a draw) (VARCHAR).\n\nUse this table to answer questions about World Cup match results, such as finding matches played in a specific year, finding matches between specific teams, or determining the winner of a particular match.  The surrounding text often provides context indicating relevant match details that can be used to formulate queries against this table.",
-    "pdf_uuid": "cec71391",
-    "created_at": "2025-09-03T12:13:20.739747",
+    "description": "**Table Name:** `pdf_f835e9b7_world_cup_matches`\n\n**Purpose:** This table comprehensively records historical FIFA World Cup match details. It allows for querying specific match outcomes, participant teams, scores, and the year and round in which a match was played. It contains 100 rows of data, covering matches from 1930 up to at least 1978 as seen in the samples.\n\n**Columns:**\n*   `Match_ID` (INT): A unique integer identifier for each individual World Cup match.\n*   `Year` (INT): The four-digit year when the World Cup match occurred.\n*   `Round` (VARCHAR): Describes the stage of the tournament the match belonged to (e.g., 'Group 1', 'Semi-final', 'Round of 16', 'Quarter-final').\n*   `Home_Team` (VARCHAR): The name of the team designated as the home team for the match.\n*   `Away_Team` (VARCHAR): The name of the team designated as the away team for the match.\n*   `Home_Score` (INT): The number of goals scored by the home team in the match.\n*   `Away_Score` (INT): The number of goals scored by the away team in the match.\n*   `Winner` (VARCHAR): The name of the team that won the match. If the match resulted in a tie, this column will contain 'Draw'.\n\n**Usage Guidance:**\nUtilize this table for any queries related to specific World Cup matches, their dates, participating teams, scores, and outcomes. This includes questions about:\n*   Finding matches played in a specific year or round.\n*   Retrieving results for a particular team as either home or away.\n*   Calculating scores, goal differences, or identifying matches with specific score patterns.\n*   Determining winners or draws for given matches.\n*   Analyzing historical World Cup performance based on match-level data.\n\nThe surrounding text, featuring similar structured match data (e.g., \"1930 Group 3 Uruguay Romania 4 0 Uruguay\", \"1934 Round of 16 Austria France 3 2 Austria\"), confirms this table is a structured representation of World Cup match results and is suitable for detailed historical inquiries about the tournament.",
+    "pdf_uuid": "f835e9b7",
+    "created_at": "2025-11-01T06:49:58.495984",
     "status": "complete",
-    "rows_stored": 100
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
   },
-  "pdf_69e9e9ea_world_cup_match_results": {
+  "pdf_81938d2d_match_results": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "Table: pdf_81938d2d_match_results\n    Columns: Match_ID, Year, Round, Home_Team, Away_Team, Home_Score, Away_Score, Winner\n    Total Rows: 27\n    Purpose: Data table with 8 columns containing structured information.\n    Schema: {'Match_ID': 'integer', 'Year': 'integer', 'Round': 'string', 'Home_Team': 'string', 'Away_Team': 'string', 'Home_Score': 'integer', 'Away_Score': 'integer', 'Winner': 'string'}",
+    "pdf_uuid": "81938d2d",
+    "created_at": "2025-11-01T07:22:21.718799",
+    "status": "complete",
+    "rows_stored": 27,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_81938d2d_table_2": {
+    "schema": {
+      "col_28": "string",
+      "col_1950": "string",
+      "Group_1": "string",
+      "Brazil": "string",
+      "Mexico": "string",
+      "col_4": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_81938d2d_table_2\n    Columns: col_28, col_1950, Group_1, Brazil, Mexico, col_4, col_0\n    Total Rows: 28\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_28': 'string', 'col_1950': 'string', 'Group_1': 'string', 'Brazil': 'string', 'Mexico': 'string', 'col_4': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "81938d2d",
+    "created_at": "2025-11-01T07:22:24.212376",
+    "status": "complete",
+    "rows_stored": 28,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_81938d2d_table_3": {
+    "schema": {
+      "col_57": "string",
+      "col_1958": "string",
+      "Group_3": "string",
+      "Sweden": "string",
+      "Mexico": "string",
+      "col_3": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_81938d2d_table_3\n    Columns: col_57, col_1958, Group_3, Sweden, Mexico, col_3, col_0\n    Total Rows: 27\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_57': 'string', 'col_1958': 'string', 'Group_3': 'string', 'Sweden': 'string', 'Mexico': 'string', 'col_3': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "81938d2d",
+    "created_at": "2025-11-01T07:22:26.735106",
+    "status": "complete",
+    "rows_stored": 27,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_81938d2d_table_4": {
+    "schema": {
+      "col_85": "string",
+      "col_1970": "string",
+      "Group_1": "string",
+      "Belgium": "string",
+      "El_Salvador": "string",
+      "col_3": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_81938d2d_table_4\n    Columns: col_85, col_1970, Group_1, Belgium, El_Salvador, col_3, col_0\n    Total Rows: 15\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_85': 'string', 'col_1970': 'string', 'Group_1': 'string', 'Belgium': 'string', 'El_Salvador': 'string', 'col_3': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "81938d2d",
+    "created_at": "2025-11-01T07:22:29.333508",
+    "status": "complete",
+    "rows_stored": 15,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_db370c09_table_1": {
+    "schema": {
+      "Match_ID": "string",
+      "Year": "string",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "string",
+      "Away_Score": "string",
+      "Winner": "string"
+    },
+    "description": "Table: pdf_db370c09_table_1\n    Columns: Match_ID, Year, Round, Home_Team, Away_Team, Home_Score, Away_Score, Winner\n    Total Rows: 27\n    Purpose: Data table with 8 columns containing structured information.\n    Schema: {'Match_ID': 'string', 'Year': 'string', 'Round': 'string', 'Home_Team': 'string', 'Away_Team': 'string', 'Home_Score': 'string', 'Away_Score': 'string', 'Winner': 'string'}",
+    "pdf_uuid": "db370c09",
+    "created_at": "2025-11-01T07:25:46.351184",
+    "status": "complete",
+    "rows_stored": 27,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_db370c09_table_2": {
+    "schema": {
+      "col_28": "string",
+      "col_1950": "string",
+      "Group_1": "string",
+      "Brazil": "string",
+      "Mexico": "string",
+      "col_4": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_db370c09_table_2\n    Columns: col_28, col_1950, Group_1, Brazil, Mexico, col_4, col_0\n    Total Rows: 28\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_28': 'string', 'col_1950': 'string', 'Group_1': 'string', 'Brazil': 'string', 'Mexico': 'string', 'col_4': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "db370c09",
+    "created_at": "2025-11-01T07:25:48.749756",
+    "status": "complete",
+    "rows_stored": 28,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_db370c09_table_3": {
+    "schema": {
+      "col_57": "string",
+      "col_1958": "string",
+      "Group_3": "string",
+      "Sweden": "string",
+      "Mexico": "string",
+      "col_3": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_db370c09_table_3\n    Columns: col_57, col_1958, Group_3, Sweden, Mexico, col_3, col_0\n    Total Rows: 27\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_57': 'string', 'col_1958': 'string', 'Group_3': 'string', 'Sweden': 'string', 'Mexico': 'string', 'col_3': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "db370c09",
+    "created_at": "2025-11-01T07:25:51.321433",
+    "status": "complete",
+    "rows_stored": 27,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_db370c09_table_4": {
+    "schema": {
+      "col_85": "string",
+      "col_1970": "string",
+      "Group_1": "string",
+      "Belgium": "string",
+      "El_Salvador": "string",
+      "col_3": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_db370c09_table_4\n    Columns: col_85, col_1970, Group_1, Belgium, El_Salvador, col_3, col_0\n    Total Rows: 15\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_85': 'string', 'col_1970': 'string', 'Group_1': 'string', 'Belgium': 'string', 'El_Salvador': 'string', 'col_3': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "db370c09",
+    "created_at": "2025-11-01T07:25:53.785906",
+    "status": "complete",
+    "rows_stored": 15,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_7796872a_table_1": {
+    "schema": {
+      "Match_ID": "string",
+      "Year": "string",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "string",
+      "Away_Score": "string",
+      "Winner": "string"
+    },
+    "description": "Table: pdf_7796872a_table_1\n    Columns: Match_ID, Year, Round, Home_Team, Away_Team, Home_Score, Away_Score, Winner\n    Total Rows: 27\n    Purpose: Data table with 8 columns containing structured information.\n    Schema: {'Match_ID': 'string', 'Year': 'string', 'Round': 'string', 'Home_Team': 'string', 'Away_Team': 'string', 'Home_Score': 'string', 'Away_Score': 'string', 'Winner': 'string'}",
+    "pdf_uuid": "7796872a",
+    "created_at": "2025-11-01T07:26:37.243004",
+    "status": "complete",
+    "rows_stored": 27,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_7796872a_table_2": {
+    "schema": {
+      "col_28": "string",
+      "col_1950": "string",
+      "Group_1": "string",
+      "Brazil": "string",
+      "Mexico": "string",
+      "col_4": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_7796872a_table_2\n    Columns: col_28, col_1950, Group_1, Brazil, Mexico, col_4, col_0\n    Total Rows: 28\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_28': 'string', 'col_1950': 'string', 'Group_1': 'string', 'Brazil': 'string', 'Mexico': 'string', 'col_4': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "7796872a",
+    "created_at": "2025-11-01T07:26:39.605821",
+    "status": "complete",
+    "rows_stored": 28,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_7796872a_table_3": {
+    "schema": {
+      "col_57": "string",
+      "col_1958": "string",
+      "Group_3": "string",
+      "Sweden": "string",
+      "Mexico": "string",
+      "col_3": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_7796872a_table_3\n    Columns: col_57, col_1958, Group_3, Sweden, Mexico, col_3, col_0\n    Total Rows: 27\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_57': 'string', 'col_1958': 'string', 'Group_3': 'string', 'Sweden': 'string', 'Mexico': 'string', 'col_3': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "7796872a",
+    "created_at": "2025-11-01T07:26:42.300040",
+    "status": "complete",
+    "rows_stored": 27,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_7796872a_table_4": {
+    "schema": {
+      "col_85": "string",
+      "col_1970": "string",
+      "Group_1": "string",
+      "Belgium": "string",
+      "El_Salvador": "string",
+      "col_3": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_7796872a_table_4\n    Columns: col_85, col_1970, Group_1, Belgium, El_Salvador, col_3, col_0\n    Total Rows: 15\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_85': 'string', 'col_1970': 'string', 'Group_1': 'string', 'Belgium': 'string', 'El_Salvador': 'string', 'col_3': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "7796872a",
+    "created_at": "2025-11-01T07:26:44.938573",
+    "status": "complete",
+    "rows_stored": 15,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_cd7a04d5_table_1": {
+    "schema": {
+      "Match_ID": "string",
+      "Year": "string",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "string",
+      "Away_Score": "string",
+      "Winner": "string"
+    },
+    "description": "Table: pdf_cd7a04d5_table_1\n    Columns: Match_ID, Year, Round, Home_Team, Away_Team, Home_Score, Away_Score, Winner\n    Total Rows: 27\n    Purpose: Data table with 8 columns containing structured information.\n    Schema: {'Match_ID': 'string', 'Year': 'string', 'Round': 'string', 'Home_Team': 'string', 'Away_Team': 'string', 'Home_Score': 'string', 'Away_Score': 'string', 'Winner': 'string'}",
+    "pdf_uuid": "cd7a04d5",
+    "created_at": "2025-11-01T07:32:21.715955",
+    "status": "complete",
+    "rows_stored": 27,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_cd7a04d5_table_2": {
+    "schema": {
+      "col_28": "string",
+      "col_1950": "string",
+      "Group_1": "string",
+      "Brazil": "string",
+      "Mexico": "string",
+      "col_4": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_cd7a04d5_table_2\n    Columns: col_28, col_1950, Group_1, Brazil, Mexico, col_4, col_0\n    Total Rows: 28\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_28': 'string', 'col_1950': 'string', 'Group_1': 'string', 'Brazil': 'string', 'Mexico': 'string', 'col_4': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "cd7a04d5",
+    "created_at": "2025-11-01T07:32:24.122161",
+    "status": "complete",
+    "rows_stored": 28,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_cd7a04d5_table_3": {
+    "schema": {
+      "col_57": "string",
+      "col_1958": "string",
+      "Group_3": "string",
+      "Sweden": "string",
+      "Mexico": "string",
+      "col_3": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_cd7a04d5_table_3\n    Columns: col_57, col_1958, Group_3, Sweden, Mexico, col_3, col_0\n    Total Rows: 27\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_57': 'string', 'col_1958': 'string', 'Group_3': 'string', 'Sweden': 'string', 'Mexico': 'string', 'col_3': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "cd7a04d5",
+    "created_at": "2025-11-01T07:32:26.521326",
+    "status": "complete",
+    "rows_stored": 27,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_cd7a04d5_table_4": {
+    "schema": {
+      "col_85": "string",
+      "col_1970": "string",
+      "Group_1": "string",
+      "Belgium": "string",
+      "El_Salvador": "string",
+      "col_3": "string",
+      "col_0": "string"
+    },
+    "description": "Table: pdf_cd7a04d5_table_4\n    Columns: col_85, col_1970, Group_1, Belgium, El_Salvador, col_3, col_0\n    Total Rows: 15\n    Purpose: Data table with 7 columns containing structured information.\n    Schema: {'col_85': 'string', 'col_1970': 'string', 'Group_1': 'string', 'Belgium': 'string', 'El_Salvador': 'string', 'col_3': 'string', 'col_0': 'string'}",
+    "pdf_uuid": "cd7a04d5",
+    "created_at": "2025-11-01T07:32:29.140219",
+    "status": "complete",
+    "rows_stored": 15,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_f15d88af_football_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "**Table Name**: `pdf_f15d88af_football_matches`\n\n**Description**:\nThis table contains detailed records of individual football (soccer) matches. Each row represents a unique match, identified by `Match_ID`, and includes information such as the `Year` it was played, the `Round` of the tournament (e.g., 'Group 1', 'Semi-final', 'Round of 16'), the `Home_Team` and `Away_Team`, their respective `Home_Score` and `Away_Score`, and the ultimate `Winner` of the match. The `Winner` column will indicate 'Draw' if the match ended in a tie. Use this table to answer questions about specific match outcomes, scores, participating teams, or results for matches across different years and tournament rounds.",
+    "pdf_uuid": "f15d88af",
+    "created_at": "2025-11-01T07:35:00.197243",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_94448187_match_results": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "The `pdf_94448187_match_results` table stores historical sports match outcomes. Each row details a single match, including the `Year` it took place, the `Round` of the competition, the `Home_Team` and `Away_Team` that participated, their `Home_Score` and `Away_Score`, and the `Winner` (which can be a team name or 'Draw').\n\n**Use this table to query:**\n*   Specific match results (teams, scores, winner).\n*   Matches played in a particular year or round.\n*   Performance or statistics of individual teams (e.g., number of wins, total scores).\n*   Any questions related to historical sports match data.",
+    "pdf_uuid": "94448187",
+    "created_at": "2025-11-01T07:42:49.130169",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_7e4c2187_world_cup_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_7e4c2187_world_cup_matches`, contains detailed records of individual matches played in the FIFA World Cup. Each row provides information about a specific match, including the `Year` it took place, the `Round` of the tournament, the participating `Home_Team` and `Away_Team`, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (which will be 'Draw' if the game ended in a tie).\n\nUse this table to answer questions related to:\n*   Historical World Cup match results and scores.\n*   Teams involved in specific matches or tournaments.\n*   Winners of World Cup games and rounds.",
+    "pdf_uuid": "7e4c2187",
+    "created_at": "2025-11-01T07:50:24.485207",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_e656e621_world_cup_match_results": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_e656e621_world_cup_match_results`, stores historical match results from FIFA World Cup tournaments. Each row represents a single match played.\n\n*   `Match_ID`: A unique identifier for each match.\n*   `Year`: The year the World Cup tournament occurred.\n*   `Round`: The stage of the tournament (e.g., 'Group 1', 'Semi-final', 'Round of 16', 'Quarter-final').\n*   `Home_Team`: The name of the home team.\n*   `Away_Team`: The name of the away team.\n*   `Home_Score`: The number of goals scored by the home team.\n*   `Away_Score`: The number of goals scored by the away team.\n*   `Winner`: The name of the winning team, or 'Draw' if the match ended in a tie.\n\nUse this table to query specific match outcomes, retrieve scores, identify winners for a given year or round, or analyze team performance in various World Cup tournaments.",
+    "pdf_uuid": "e656e621",
+    "created_at": "2025-11-01T08:03:14.031506",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_2388e64c_football_matches": {
     "schema": {
       "match_id": "integer",
       "year": "integer",
@@ -143,13 +428,14 @@
       "away_score": "integer",
       "winner": "string"
     },
-    "description": "This table, `pdf_69e9e9ea_world_cup_match_results`, stores data on World Cup match results.  It contains information about individual matches, including the `match_id`, `year`, `round` of the tournament, the `home_team` and `away_team`, their respective `home_score` and `away_score`, and the `winner` of the match.  The data spans multiple years and tournament rounds. Use this table to query information about specific matches, teams, scores, or winners based on year, round, or team names.  The data is primarily numerical (scores, year, match ID) and string-based (team names, round, winner).",
-    "pdf_uuid": "69e9e9ea",
-    "created_at": "2025-09-03T14:00:51.103954",
+    "description": "This table, `pdf_2388e64c_football_matches`, contains records of individual football matches. Each entry includes a unique `match_id`, the `year` the match occurred, the competition `round` (e.g., 'Group 1', 'Semi-final'), the `home_team` and `away_team` that played, their respective `home_score` and `away_score`, and the `winner` of the match (or 'Draw' if tied).\n\nUse this table to query match results, scores, identify winning teams, find matches between specific teams, or retrieve information about matches played in particular years or competition rounds.",
+    "pdf_uuid": "2388e64c",
+    "created_at": "2025-11-01T09:20:18.753479",
     "status": "complete",
-    "rows_stored": 100
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
   },
-  "pdf_39089c73_world_cup_match_results": {
+  "pdf_bb6c9d1e_world_cup_matches": {
     "schema": {
       "match_id": "integer",
       "year": "integer",
@@ -160,10 +446,443 @@
       "away_score": "integer",
       "winner": "string"
     },
-    "description": "This table, `pdf_39089c73_world_cup_match_results`, stores results of World Cup matches.  It contains information for approximately 100 matches.  Each row represents a single match with details including:  match ID (`match_id`), year (`year`), round of the tournament (`round`), home and away teams (`home_team`, `away_team`), their respective scores (`home_score`, `away_score`), and the match winner (`winner`).  The data types are integers for IDs and scores, and text for team names, round, and winner.  Use this table to answer questions about specific matches, teams, scores, and winners from the World Cup.  The data spans multiple years, as indicated by the sample data.  The `winner` column can contain \"Draw\" if the match was a draw.",
-    "pdf_uuid": "39089c73",
-    "created_at": "2025-09-03T15:10:11.458863",
+    "description": "This table, `pdf_bb6c9d1e_world_cup_matches`, stores detailed information about individual World Cup football matches. It includes the `year` the match occurred, the tournament `round`, the `home_team` and `away_team`, their respective `home_score` and `away_score`, and the `winner` of the match (or 'Draw'). Use this table to answer questions related to World Cup match results, team performances, scores, and tournament stages across different years.",
+    "pdf_uuid": "bb6c9d1e",
+    "created_at": "2025-11-01T09:26:05.469052",
     "status": "complete",
-    "rows_stored": 100
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_f79a61a9_world_cup_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_f79a61a9_world_cup_matches`, stores historical information about individual FIFA World Cup football matches. Each row represents a single match, detailing the `Year` it took place, the `Round` of the tournament (e.g., 'Group 1', 'Semi-final'), the `Home_Team` and `Away_Team` involved, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw' if applicable).\n\nUse this table to answer questions about specific World Cup match results, teams that played, scores, winners, or the stages of the tournament within different years. It's suitable for queries asking about match outcomes, team performances, and tournament progression.",
+    "pdf_uuid": "f79a61a9",
+    "created_at": "2025-11-01T11:25:49.185524",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_a37f1f9b_world_cup_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "The `pdf_a37f1f9b_world_cup_matches` table stores detailed historical information about individual World Cup soccer matches. Each row represents a single match, including the `Year` it was played, the tournament `Round`, the `Home_Team` and `Away_Team` names, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw' for a tie). Use this table to query match results, scores, winning teams, and teams involved in various World Cup tournaments and rounds.",
+    "pdf_uuid": "a37f1f9b",
+    "created_at": "2025-11-01T11:27:01.408684",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_dd2bf606_match_results": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_dd2bf606_match_results`, stores historical football (soccer) match outcomes and details. Each row represents a single match, recording the `Year` it took place, the tournament `Round` (e.g., 'Group', 'Semi-final', 'Round of 16'), the `Home_Team` and `Away_Team`, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw').\n\nUse this table to answer questions about:\n*   Specific match results and scores.\n*   Winning teams for matches in particular years or rounds.\n*   Teams that participated in certain tournament stages (e.g., semi-finals).\n*   Data on major international football tournaments, such as the World Cup, primarily covering years from 1930 onwards.",
+    "pdf_uuid": "dd2bf606",
+    "created_at": "2025-11-01T11:46:38.438467",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_7f433534_football_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_7f433534_football_matches`, contains 100 historical football match records. Each entry includes a unique `Match_ID`, the `Year` the match took place, the `Round` (e.g., 'Group 1', 'Semi-final'), the `Home_Team` and `Away_Team`, their respective `Home_Score` and `Away_Score`, and the `Winner` (or 'Draw' if applicable). Use this table to retrieve information about past football match outcomes, scores, participating teams, and winners for specific years or rounds.",
+    "pdf_uuid": "7f433534",
+    "created_at": "2025-11-01T11:57:26.208800",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_75cf3027_football_matches": {
+    "schema": {
+      "match_id": "integer",
+      "year": "integer",
+      "round": "string",
+      "home_team": "string",
+      "away_team": "string",
+      "home_score": "integer",
+      "away_score": "integer",
+      "winner": "string"
+    },
+    "description": "**Table Name**: `pdf_75cf3027_football_matches`\n\n**Description**: This table contains detailed records of individual football (soccer) matches. Each row represents a single match, providing information about the year it occurred, the tournament round, the home and away teams, their respective scores, and the final winner.\n\n**Columns**:\n*   `match_id`: A unique numerical identifier for each specific match.\n*   `year`: The year in which the football match took place.\n*   `round`: The stage of the tournament or competition (e.g., 'Group 1', 'Semi-final', 'Round of 16').\n*   `home_team`: The name of the team playing at home.\n*   `away_team`: The name of the team playing away.\n*   `home_score`: The number of goals scored by the home team.\n*   `away_score`: The number of goals scored by the away team.\n*   `winner`: The name of the team that won the match. If the match resulted in a tie, this column will store 'Draw'.\n\n**Usage Guide**: Use this table to query historical football match data. It is suitable for questions involving specific match outcomes, scores, participating teams, the year a match was played, or the round it belonged to. Examples include finding the winner of a particular match, listing all matches in a given year, retrieving scores for specific teams, or identifying matches that ended in a draw.",
+    "pdf_uuid": "75cf3027",
+    "created_at": "2025-11-01T12:04:06.574039",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_8ea094e0_match_results": {
+    "schema": {
+      "match_id": "integer",
+      "year": "integer",
+      "round": "string",
+      "home_team": "string",
+      "away_team": "string",
+      "home_score": "integer",
+      "away_score": "integer",
+      "winner": "string"
+    },
+    "description": "The `pdf_8ea094e0_match_results` table stores historical football (soccer) match results. Each row represents a single match, identified by `match_id`. It includes the `year` of the match, the `round` of the competition (e.g., 'Group 1', 'Semi-final'), the names of the `home_team` and `away_team`, their respective `home_score` and `away_score`, and the `winner` of the match (which can be 'Draw' if the match was a tie).\n\nUse this table when queries involve:\n*   Finding specific match outcomes, scores, or winners.\n*   Querying matches based on year, participating teams, or the competition round.\n*   Identifying matches that resulted in a draw.\n\nThe surrounding text confirms this table is part of a collection of historical football match data, listing various matches with their results.",
+    "pdf_uuid": "8ea094e0",
+    "created_at": "2025-11-01T12:19:45.553260",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_0424b939_football_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_0424b939_football_matches`, stores comprehensive historical football match results. It contains 100 records, each uniquely identified by `Match_ID`. For every match, it provides the `Year`, the specific `Round` (e.g., 'Group 1', 'Semi-final'), the names of the `Home_Team` and `Away_Team`, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match. Importantly, the `Winner` column will contain 'Draw' if the game ended in a tie. Use this table for queries asking about specific match outcomes, team performances in different years or rounds, scores, winning teams, or identifying drawn matches.",
+    "pdf_uuid": "0424b939",
+    "created_at": "2025-11-01T13:13:17.916275",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_da52be86_football_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "The `pdf_da52be86_football_matches` table stores detailed historical information about individual football matches. Each record uniquely identifies a match (`Match_ID`) and includes the `Year` it was played, the `Round` of the competition, the `Home_Team` and `Away_Team` that participated, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (which can be a team's name or 'Draw' for a tie).\n\n**Use this table when queries involve:**\n*   Finding match results, scores, or winners/draws.\n*   Identifying matches played by specific `Home_Team` or `Away_Team`.\n*   Filtering matches by `Year` or `Round` of the competition.\n*   Analyzing overall match outcomes for teams over time.",
+    "pdf_uuid": "da52be86",
+    "created_at": "2025-11-01T13:18:24.917358",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_609acd38_match_results": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "The `pdf_609acd38_match_results` table stores historical match data. Each row represents a single match, identified by `Match_ID`. It includes the `Year` and `Round` of the match, the `Home_Team` and `Away_Team` that competed, their respective `Home_Score` and `Away_Score`, and the `Winner` (or 'Draw'). Use this table to retrieve information about specific match outcomes, scores, participating teams, or match events within certain years and rounds.",
+    "pdf_uuid": "609acd38",
+    "created_at": "2025-11-01T13:20:20.666686",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_6d552df9_world_cup_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "## Table Description for `pdf_6d5552df9_world_cup_matches`\n\nThis table stores detailed information about individual World Cup matches, primarily covering matches from 1930 to 1978 as seen in the sample data. It is suitable for queries related to specific match outcomes, team performances, scores, and tournament rounds within this period.\n\n**Table Name**: `pdf_6d5552df9_world_cup_matches` (Total Rows: 100)\n\n**Columns**:\n\n*   **`Match_ID`** (INT): A unique identifier for each specific match.\n*   **`Year`** (INT): The year in which the World Cup match took place.\n*   **`Round`** (VARCHAR): The stage of the tournament (e.g., 'Group 1', 'Semi-final', 'Quarter-final', 'Round of 16').\n*   **`Home_Team`** (VARCHAR): The name of the team designated as the home team for the match.\n*   **`Away_Team`** (VARCHAR): The name of the team designated as the away team for the match.\n*   **`Home_Score`** (INT): The final score achieved by the home team.\n*   **`Away_Score`** (INT): The final score achieved by the away team.\n*   **`Winner`** (VARCHAR): The name of the team that won the match. If the match ended in a draw, this column will contain 'Draw'.\n\n**Usage Guidance**:\nUse this table when queries involve:\n*   Finding match results (scores, winners) for specific years or rounds.\n*   Identifying teams participating in particular matches.\n*   Analyzing home and away team performances.\n*   Determining the outcome of a match (win, loss, draw).\n\nThe surrounding context suggests this table is part of a larger collection of World Cup match data, providing specific match details such as team names, scores, and outcomes for historical tournaments.",
+    "pdf_uuid": "6d552df9",
+    "created_at": "2025-11-01T13:21:51.947342",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_c970aca4_world_cup_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_c970aca4_world_cup_matches`, stores detailed information about individual World Cup football (soccer) matches. Each row represents a unique match, providing the `Year` it occurred, the `Round` of the tournament, the `Home_Team` and `Away_Team` that played, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw' if applicable).\n\nUse this table to answer questions about specific World Cup matches, teams, scores, winners, and tournament stages across different years, particularly for historical data from 1930 onwards.",
+    "pdf_uuid": "c970aca4",
+    "created_at": "2025-11-01T13:27:28.967388",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_c238ba07_match_results": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_c238ba07_match_results`, stores comprehensive historical match results for sports events.\n\nEach row represents a single match and includes:\n*   `Match_ID`: A unique identifier for the match.\n*   `Year`: The year the match took place.\n*   `Round`: The specific round of the tournament (e.g., 'Group 1', 'Semi-final', 'Round of 16').\n*   `Home_Team`: The name of the home team.\n*   `Away_Team`: The name of the away team.\n*   `Home_Score`: The score of the home team.\n*   `Away_Score`: The score of the away team.\n*   `Winner`: The declared winner of the match (e.g., 'Uruguay', 'Romania', or 'Draw' if it was a tie).\n\n**Use this table when you need to:**\n*   Query information about specific historical matches.\n*   Find scores, participating teams, or winners for matches from various years and rounds.\n*   Analyze match outcomes, team performances, or match counts over time.\n*   Identify matches that resulted in a draw.\n\n**Examples of questions this table can answer:**\n*   \"Which team won a match in 1930 with a specific score?\"\n*   \"List all matches from the 'Quarter-final' round in a given year.\"\n*   \"Find the home and away scores for a match between two specific teams.\"\n*   \"Count how many matches ended in a 'Draw'.\"",
+    "pdf_uuid": "c238ba07",
+    "created_at": "2025-11-01T13:33:03.924715",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_84354ed6_match_results": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "The `pdf_84354ed6_match_results` table contains detailed historical match outcomes. Each row represents a single sports match, including the `Year` it took place, the `Round` of the tournament, the `Home_Team` and `Away_Team` that competed, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw' if it was a tie).\n\n**Use this table for queries related to:**\n*   Finding match results, scores, or winners for specific years or tournament rounds.\n*   Identifying teams that played in certain matches or their performance.\n*   Analyzing match outcomes within the time range of 1930 to 1978.",
+    "pdf_uuid": "84354ed6",
+    "created_at": "2025-11-01T13:35:29.648733",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_fce835d1_football_matches": {
+    "schema": {
+      "match_id": "integer",
+      "year": "integer",
+      "round": "string",
+      "home_team": "string",
+      "away_team": "string",
+      "home_score": "integer",
+      "away_score": "integer",
+      "winner": "string"
+    },
+    "description": "**Table Name:** `pdf_fce835d1_football_matches`\n\n**Description:** This table stores historical football match data. Each row details a single match, including its unique ID, the year and round it was played, the names of the home and away teams, their final scores, and the declared winner (or 'Draw' if the match was a tie).\n\n**Key Columns:**\n*   `match_id`: Unique identifier for each match.\n*   `year`: The year the match took place.\n*   `round`: The stage of the tournament (e.g., 'Group 1', 'Semi-final').\n*   `home_team`, `away_team`: The names of the participating teams.\n*   `home_score`, `away_score`: The final scores for each team.\n*   `winner`: The winning team's name, or 'Draw' if the match ended in a tie.\n\n**Purpose & Use Cases:** Use this table to retrieve information about specific football matches, find match results, determine winners, or analyze match data based on year, round, or participating teams. It is suitable for queries such as:\n*   Finding all matches played in a particular year.\n*   Identifying the score of a match between two specific teams.\n*   Listing all matches that ended in a draw.\n*   Determining the winner of a match in a given round.",
+    "pdf_uuid": "fce835d1",
+    "created_at": "2025-11-01T13:39:05.258051",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_0bbf3710_world_cup_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "The `pdf_0bbf3710_world_cup_matches` table stores detailed information about individual matches played in the FIFA World Cup. Each row represents a single match.\n\n*   **`Match_ID`** (INT): A unique numerical identifier for each match.\n*   **`Year`** (INT): The year the World Cup tournament and this specific match took place.\n*   **`Round`** (VARCHAR): Describes the stage of the tournament (e.g., 'Group 1', 'Semi-final', 'Round of 16', 'Quarter-final').\n*   **`Home_Team`** (VARCHAR): The name of the team designated as the home team for the match.\n*   **`Away_Team`** (VARCHAR): The name of the team designated as the away team for the match.\n*   **`Home_Score`** (INT): The number of goals scored by the home team.\n*   **`Away_Score`** (INT): The number of goals scored by the away team.\n*   **`Winner`** (VARCHAR): The name of the team that won the match. If the match ended in a tie, this column will contain the value 'Draw'.\n\n**LLM Usage Guidance:**\nUse this table to answer questions related to specific World Cup match details, including:\n*   Identifying participating teams in a match.\n*   Retrieving scores for home and away teams.\n*   Determining the winner of a match or if it was a draw.\n*   Filtering matches by year, round, or specific teams.\n*   Calculating aggregates like total goals, wins, or draws for teams across matches.",
+    "pdf_uuid": "0bbf3710",
+    "created_at": "2025-11-01T13:43:54.443400",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_4c18faa6_world_cup_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_4c18faa6_world_cup_matches`, contains comprehensive historical data for individual World Cup matches. It has 100 rows and 8 columns, providing details for each game played.\n\n**Use this table to answer questions related to:**\n*   **Specific World Cup match outcomes:** When a match occurred (`Year`, `Round`), the teams involved (`Home_Team`, `Away_Team`), their scores (`Home_Score`, `Away_Score`), and the `Winner`.\n*   **Team performance in World Cups:** Which team won specific matches or played in certain rounds.\n*   **Historical World Cup results:** Analyze match data across different years and rounds.\n\n**Key Columns for Querying:**\n*   `Match_ID`: Unique identifier for each match.\n*   `Year`: The year the World Cup match took place.\n*   `Round`: The stage of the tournament (e.g., 'Group 1', 'Semi-final').\n*   `Home_Team`, `Away_Team`: The names of the competing teams.\n*   `Home_Score`, `Away_Score`: The final scores of the home and away teams.\n*   `Winner`: The team that won the match, or 'Draw' if it was a tie.",
+    "pdf_uuid": "4c18faa6",
+    "created_at": "2025-11-01T13:46:58.535537",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_0e9980fc_match_results": {
+    "schema": {
+      "match_id": "integer",
+      "year": "integer",
+      "round": "string",
+      "home_team": "string",
+      "away_team": "string",
+      "home_score": "integer",
+      "away_score": "integer",
+      "winner": "string"
+    },
+    "description": "This table, `pdf_0e9980fc_match_results`, stores detailed information about individual sports matches, primarily football (soccer). It contains **100 records** of match outcomes.\n\n**Key columns and their uses:**\n*   `match_id`: A unique identifier for each match.\n*   `year`: The year the match took place.\n*   `round`: Describes the stage of the competition (e.g., 'Group 1', 'Semi-final', 'Round of 16', 'Quarter-final').\n*   `home_team`, `away_team`: The names of the two competing teams.\n*   `home_score`, `away_score`: The final scores for the home and away teams, respectively.\n*   `winner`: The name of the team that won the match, or 'Draw' if it was a tie.\n\n**Use this table to answer questions about:**\n*   Specific match results, including scores and participating teams.\n*   Match outcomes (who won, who lost, or draws) for particular years or rounds.\n*   Performance of teams over different years or rounds.\n*   Counting matches, goals, or wins by teams.\n\n**Example queries it can answer:** \"Which team won the match in 1930 with a score of 4-0?\", \"List all matches from the 'Semi-final' round.\", \"Find the home scores for matches involving 'Uruguay'.\"",
+    "pdf_uuid": "0e9980fc",
+    "created_at": "2025-11-01T13:49:48.014754",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_c0d3a5b2_football_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "The `pdf_c0d3a5b2_football_matches` table contains 100 records detailing football matches. Each entry includes a unique `Match_ID`, the `Year` the match took place, the `Round` of the competition, the `Home_Team` and `Away_Team`, their respective `Home_Score` and `Away_Score`, and the `Winner` (which will be 'Draw' if the match was a tie). Use this table to query specific match details, scores, winning teams, or to filter matches by year, round, or participating teams.",
+    "pdf_uuid": "c0d3a5b2",
+    "created_at": "2025-11-01T13:50:52.195197",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_b1e89564_match_results": {
+    "schema": {
+      "match_id": "integer",
+      "year": "integer",
+      "round": "string",
+      "home_team": "string",
+      "away_team": "string",
+      "home_score": "integer",
+      "away_score": "integer",
+      "winner": "string"
+    },
+    "description": "The `pdf_b1e89564_match_results` table stores historical football (soccer) match outcomes. Each row details a single match, including the `year` it occurred, the tournament `round` (e.g., 'Group 1', 'Semi-final'), the `home_team` and `away_team`, their `home_score` and `away_score`, and the `winner` (or 'Draw' for a tie). Use this table to query specific match results, team performance, scores, and winners for various years and tournament stages.",
+    "pdf_uuid": "b1e89564",
+    "created_at": "2025-11-01T13:55:15.516674",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_3e23274a_world_cup_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_3e23274a_world_cup_matches`, stores detailed information about individual World Cup football (soccer) matches. Each row represents one match, identified by `Match_ID`. It includes the `Year` of the tournament, the `Round` (e.g., 'Group 1', 'Semi-final', 'Round of 16', 'Quarter-final'), the `Home_Team` and `Away_Team` that competed, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw' for a tie). Use this table to answer questions related to World Cup match results, scores, participating teams, and tournament stages for historical matches.",
+    "pdf_uuid": "3e23274a",
+    "created_at": "2025-11-01T14:08:55.604918",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_14f613f5_football_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_14f613f5_football_matches`, stores information about individual football matches. It includes details such as the `Year`, `Round` of the tournament, the `Home_Team` and `Away_Team`, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw'). Use this table for queries related to football match outcomes, scores, participating teams, and tournament progression in different years.",
+    "pdf_uuid": "14f613f5",
+    "created_at": "2025-11-01T14:11:43.500369",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_f725990c_match_results": {
+    "schema": {
+      "match_id": "integer",
+      "year": "integer",
+      "round": "string",
+      "home_team": "string",
+      "away_team": "string",
+      "home_score": "integer",
+      "away_score": "integer",
+      "winner": "string"
+    },
+    "description": "This table, `pdf_f725990c_match_results`, stores comprehensive records of historical football (soccer) matches. It contains 100 entries, each providing details for a single match, including its `year`, the `round` of the tournament (e.g., 'Group 1', 'Semi-final', 'Round of 16'), the `home_team` and `away_team`, their respective `home_score` and `away_score`, and the `winner` (or 'Draw' if the match was a tie).\n\n**Use this table when queries involve:**\n\n*   **Match results or outcomes:** Determining the winner of a specific match or all matches in a given year/round.\n*   **Scores:** Retrieving the scores of teams in particular matches.\n*   **Team performance:** Finding matches involving a specific `home_team` or `away_team`.\n*   **Match context:** Filtering matches by `year` or `round`.\n*   **Historical football data:** Answering questions related to past football competitions and their details.\n\n**Examples of queries this table can answer:**\n\n*   \"What were the scores for all matches in 1930?\"\n*   \"Which team won the match between Uruguay and Peru in 1930?\"\n*   \"List all matches that ended in a 'Draw'.\"\n*   \"Show the home and away scores for Argentina in semi-final matches.\"",
+    "pdf_uuid": "f725990c",
+    "created_at": "2025-11-01T14:23:12.312742",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_a92d9ed1_match_results": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "The `pdf_a92d9ed1_match_results` table stores historical **football (soccer) match results** from various tournaments. Each row represents a single match, detailing the `Year` it occurred, the `Round` of the tournament (e.g., 'Group 1', 'Semi-final'), the `Home_Team` and `Away_Team` that played, their respective `Home_Score` and `Away_Score`, and the `Winner` of the match (or 'Draw' if it was a tie).\n\n**Use this table to:**\n*   Find details about specific matches, including scores and participating teams.\n*   Identify winners or drawn matches for particular years or rounds.\n*   Analyze team performance across different tournaments or stages.\n*   Retrieve match information based on year, round, or team names.",
+    "pdf_uuid": "a92d9ed1",
+    "created_at": "2025-11-01T14:53:03.991680",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
+  },
+  "pdf_98b2e191_football_matches": {
+    "schema": {
+      "Match_ID": "integer",
+      "Year": "integer",
+      "Round": "string",
+      "Home_Team": "string",
+      "Away_Team": "string",
+      "Home_Score": "integer",
+      "Away_Score": "integer",
+      "Winner": "string"
+    },
+    "description": "This table, `pdf_98b2e191_football_matches`, stores comprehensive records of individual football matches. Each row represents a single match, detailing the year it occurred, the tournament round, the home and away teams, their respective scores, and the final winner or if it was a draw.\n\nUse this table when queries involve:\n*   Retrieving information about specific football matches, including scores and outcomes.\n*   Analyzing match results by year, round, or participating teams.\n*   Identifying winning teams or matches that ended in a draw.\n*   Calculating scores for home and away teams.\n\n**Columns:**\n*   **`Match_ID`**: A unique identifier for each match.\n*   **`Year`**: The year the match was played.\n*   **`Round`**: The stage of the tournament (e.g., 'Group', 'Semi-final').\n*   **`Home_Team`**: The team designated as the home team.\n*   **`Away_Team`**: The team designated as the away team.\n*   **`Home_Score`**: The score achieved by the home team.\n*   **`Away_Score`**: The score achieved by the away team.\n*   **`Winner`**: The name of the winning team, or 'Draw' if the match ended in a tie.",
+    "pdf_uuid": "98b2e191",
+    "created_at": "2025-11-01T14:56:40.665931",
+    "status": "complete",
+    "rows_stored": 100,
+    "file_hash": "acc35ef3e04410e4af2b9b91ff809a99138b951c996bdd1e566a90e54b1a84ba"
   }
 }

@@ -6,6 +6,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from pydantic import BaseModel
 import os
+import concurrent.futures
+import time
 try:
     from urllib.parse import urlparse, parse_qs
 except ImportError as e:
@@ -26,6 +28,7 @@ class AgentState(BaseModel):
     pdf_uuid: Optional[str] = None
     table_sub_query: str = ""
     rag_sub_query: str = ""
+    query_type: str = "unknown"  # Classification: "table", "rag", or "both"
 
     class Config:
         arbitrary_types_allowed = True
@@ -39,7 +42,7 @@ class ManagerAgent:
     def __init__(self, gemini_api_key: str, chatbot_agent=None):
         """Initialize the Manager Agent with Gemini LLM and optional ChatbotAgent"""
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
+            model="gemini-2.5-flash",
             google_api_key=gemini_api_key,
             temperature=0.1
         )
@@ -48,13 +51,20 @@ class ManagerAgent:
         # Initialize Combiner Agent
         try:
             from .combiner_agent import CombinerAgent
-            self.combiner_agent = CombinerAgent(gemini_api_key)
+            self.combiner_agent = CombinerAgent(gemini_api_key, model_name="gemini-2.5-flash")
             logger.info(
                 "Combiner Agent initialized successfully in Manager Agent")
         except Exception as e:
             logger.error(f"Failed to initialize Combiner Agent: {e}")
             self.combiner_agent = None
 
+        # ⚡ SPEED OPTIMIZATION: Caching
+        self._schema_cache = None
+        self._schema_cache_time = None
+        self._schema_cache_ttl = 300  # 5 minutes
+        self._classification_cache = {}  # Query -> classification mapping
+        self._cache_max_size = 100
+        
         self.workflow = self._create_workflow()
         try:
             from .table_agent import TableAgent
@@ -81,6 +91,7 @@ class ManagerAgent:
         workflow.add_node("manager", self._manager_node)
         workflow.add_node("table", self._table_node)
         workflow.add_node("rag", self._rag_node)
+        workflow.add_node("parallel", self._parallel_node)  # ⚡ NEW: Parallel execution node
         workflow.add_node("combiner", self._combiner_node)
 
         # Add edges
@@ -91,7 +102,7 @@ class ManagerAgent:
             {
                 "table_only": "table",
                 "rag_only": "rag",
-                "both": "table",  # Start with table, then go to RAG
+                "both": "parallel",  # ⚡ OPTIMIZED: Route to parallel node for "both"
                 "end": END
             }
         )
@@ -107,6 +118,7 @@ class ManagerAgent:
         )
 
         workflow.add_edge("rag", "combiner")
+        workflow.add_edge("parallel", "combiner")  # ⚡ Parallel goes directly to combiner
         workflow.add_edge("combiner", END)
 
         return workflow.compile()
@@ -126,10 +138,31 @@ class ManagerAgent:
         1. Determine the routing strategy
         2. Generate specific sub-queries for each agent
 
-        ROUTING RULES:
-        - "table": Query can be answered using database tables only
-        - "rag": Query needs general knowledge/document content only  
-        - "both": Query needs both database data AND external knowledge
+        ROUTING RULES - Read Carefully:
+        
+        ✅ Use "table" when:
+        - Query asks for specific data/statistics/counts that exist in the database
+        - Examples: "List all winners", "How many matches", "Which teams scored X goals"
+        - Key words: list, count, statistics, data, total, average, specific numbers
+        
+        ✅ Use "rag" when:
+        - Query asks for historical context, significance, explanations, or general knowledge
+        - Query asks "what is", "why", "how did X happen", "what was the significance"
+        - Information is typically found in text documents, not structured tables
+        - Examples: "What is the historical significance", "When did X start", "Explain the importance"
+        - Key words: significance, history, context, background, importance, meaning, why, explain
+        
+        ✅ Use "both" when:
+        - Query EXPLICITLY asks for BOTH statistics/data (from tables) AND historical context/achievements (from documents)
+        - Query contains keywords from BOTH categories above
+        - Examples: "Provide comprehensive overview including match statistics AND historical achievements"
+        - Key indicator: Query asks for data analysis PLUS contextual narrative
+
+        CRITICAL DECISION RULES:
+        - If query asks "when did X start" or "what year" → Check if this is general knowledge (rag) or requires database lookup (table)
+        - If query says "comprehensive overview" with BOTH "statistics" AND "historical/achievements" → Use "both"
+        - If query is purely about concepts, significance, or history → Use "rag" even if it mentions years/dates
+        - Default to simplest routing (avoid "both" unless truly necessary)
 
         RESPONSE FORMAT:
         Return ONLY a valid JSON object (no markdown, no explanations) with:
@@ -147,76 +180,132 @@ class ManagerAgent:
         - For "both" status: Create complementary sub-queries that together answer the original question
 
         EXAMPLES:
+        
+        Example 1:
+        Original: "What is the historical significance of the FIFA World Cup and when did it start?"
+        {{
+        "status": "rag",
+        "rag_agent_sub_query": "What is the historical significance of the FIFA World Cup and when did it start?",
+        "table_agent_sub_query": ""
+        }}
+        Reason: Asks about significance (context) and start year (general knowledge), not database statistics
+        
+        Example 2:
+        Original: "Provide a comprehensive overview of Uruguay's World Cup journey including their match statistics and historical achievements"
+        {{
+        "status": "both",
+        "rag_agent_sub_query": "What are Uruguay's historical World Cup achievements and significant moments?",
+        "table_agent_sub_query": "Provide all match statistics for Uruguay including wins, losses, goals, and match details"
+        }}
+        Reason: EXPLICITLY asks for BOTH match statistics (table data) AND historical achievements (context/narrative)
+        
+        Example 3:
+        Original: "What are the names of teams that won Final matches?"
+        {{
+        "status": "table",
+        "rag_agent_sub_query": "",
+        "table_agent_sub_query": "What are the names of teams that won Final matches?"
+        }}
+        Reason: Pure data query asking for list of winners from database
+
+        Example 4:
         Original: "How many times did Brazil win the FIFA World Cup and what leagues does Europe have?"
         {{
         "status": "both",
         "rag_agent_sub_query": "What are the major football leagues in Europe?",
         "table_agent_sub_query": "How many times did Brazil win the World Cup according to the data?"
         }}
-
-        Original: "What is the average salary in the employee table?"
-        {{
-        "status": "table", 
-        "rag_agent_sub_query": "",
-        "table_agent_sub_query": "What is the average salary of all employees?"
-        }}
+        Reason: Two separate questions - one needs data (Brazil wins), one needs general knowledge (European leagues)
         """
 
-        messages = [
-            SystemMessage(content=system_prompt),
-            HumanMessage(content=f"Original Query: {state.query}")
-        ]
-
+        # ⚡ SPEED OPTIMIZATION: Check classification cache
+        import hashlib
+        query_hash = hashlib.md5(state.query.lower().strip().encode()).hexdigest()
+        
         try:
-            response = self.llm.invoke(messages)
-            logger.info(f"the manager llm output before json extraction: {response}")
-            
-            # Extract JSON from response, handling markdown code blocks
-            content = response.content.strip()
-            
-            # Remove markdown code block markers if present
-            if content.startswith('```json'):
-                content = content.replace('```json\n', '').replace('```', '').strip()
-            elif content.startswith('```'):
-                content = content.replace('```\n', '').replace('```', '').strip()
-            
-            # Try to find JSON within the content if still not valid
-            if not content.startswith('{'):
-                # Look for JSON block within the content
-                start_idx = content.find('{')
-                end_idx = content.rfind('}')
-                if start_idx != -1 and end_idx != -1:
-                    content = content[start_idx:end_idx+1]
-            
-            logger.info(f"Cleaned content for JSON parsing: {content}")
-            result = json.loads(content)
-            
-            decision = result.get("status", "rag").lower()
-            rag_sub_query = result.get("rag_agent_sub_query", "")
-            table_sub_query = result.get("table_agent_sub_query", "")
+            if query_hash in self._classification_cache:
+                logger.debug(f"✅ Using cached classification for query: {state.query[:50]}...")
+                cached_result = self._classification_cache[query_hash]
+                decision = cached_result['decision']
+                rag_sub_query = cached_result.get('rag_sub_query', '')
+                table_sub_query = cached_result.get('table_sub_query', '')
+                result = cached_result
+            else:
+                messages = [
+                    SystemMessage(content=system_prompt),
+                    HumanMessage(content=f"Original Query: {state.query}")
+                ]
 
-            logger.info(f"the manager llm output after json extraction: {result}")
+                response = self.llm.invoke(messages)
+                logger.info(f"the manager llm output before json extraction: {response}")
+                
+                # Extract JSON from response, handling markdown code blocks
+                content = response.content.strip()
+                
+                # Remove markdown code block markers if present
+                if content.startswith('```json'):
+                    content = content.replace('```json\n', '').replace('```', '').strip()
+                elif content.startswith('```'):
+                    content = content.replace('```\n', '').replace('```', '').strip()
+                
+                # Try to find JSON within the content if still not valid
+                if not content.startswith('{'):
+                    # Look for JSON block within the content
+                    start_idx = content.find('{')
+                    end_idx = content.rfind('}')
+                    if start_idx != -1 and end_idx != -1:
+                        content = content[start_idx:end_idx+1]
+                
+                logger.info(f"Cleaned content for JSON parsing: {content}")
+                result = json.loads(content)
+                
+                decision = result.get("status", "rag").lower()
+                rag_sub_query = result.get("rag_agent_sub_query", "")
+                table_sub_query = result.get("table_agent_sub_query", "")
+
+                # ⚡ SPEED OPTIMIZATION: Store in cache
+                cache_entry = {
+                    'decision': decision,
+                    'rag_sub_query': rag_sub_query,
+                    'table_sub_query': table_sub_query,
+                    'status': decision
+                }
+                self._classification_cache[query_hash] = cache_entry
+                
+                # Limit cache size
+                if len(self._classification_cache) > self._cache_max_size:
+                    # Remove oldest entry (simple FIFO)
+                    self._classification_cache.pop(next(iter(self._classification_cache)))
+                logger.debug(f"✅ Cached classification for query: {state.query[:50]}...")
+
+                logger.info(f"the manager llm output after json extraction: {result}")
+                
             # Set flags and sub-queries based on decision
             if decision == "table":
                 state.needs_table = True
                 state.needs_rag = False
                 state.table_sub_query = table_sub_query or state.query
+                state.query_type = "table"
             elif decision == "rag":
                 state.needs_table = False
                 state.needs_rag = True
                 state.rag_sub_query = rag_sub_query or state.query
+                state.query_type = "rag"
             elif decision == "both":
                 state.needs_table = True
                 state.needs_rag = True
                 state.table_sub_query = table_sub_query or state.query
                 state.rag_sub_query = rag_sub_query or state.query
+                state.query_type = "both"
             else:
                 # Default to RAG for unknown cases
                 state.needs_table = False
                 state.needs_rag = True
                 state.rag_sub_query = state.query
+                state.query_type = "rag"
 
             print(f"[DEBUG] Manager decision: {decision}")
+            print(f"[DEBUG] Query type: {state.query_type}")
             print(f"[DEBUG] Table sub-query: {getattr(state, 'table_sub_query', 'None')}")
             print(f"[DEBUG] RAG sub-query: {getattr(state, 'rag_sub_query', 'None')}")
 
@@ -231,7 +320,8 @@ class ManagerAgent:
             "needs_table": state.needs_table, 
             "needs_rag": state.needs_rag,
             "table_sub_query": getattr(state, 'table_sub_query', ''),
-            "rag_sub_query": getattr(state, 'rag_sub_query', '')
+            "rag_sub_query": getattr(state, 'rag_sub_query', ''),
+            "query_type": state.query_type
         }
 
     def _table_node(self, state: AgentState) -> Dict[str, Any]:
@@ -277,6 +367,71 @@ class ManagerAgent:
             print(f"[DEBUG] RAG Node error response: {rag_response}")
         
         return {"rag_response": rag_response}
+    
+    def _parallel_node(self, state: AgentState) -> Dict[str, Any]:
+        """
+        ⚡ SPEED OPTIMIZATION: Execute Table and RAG agents in parallel for 'both' queries
+        This saves 5-10s on hybrid queries by running both agents concurrently
+        """
+        print(f"[DEBUG] Parallel Node called - executing Table and RAG agents concurrently")
+        logger.info("⚡ Executing Table and RAG agents in parallel")
+        
+        table_response = ""
+        rag_response = ""
+        
+        def run_table():
+            """Execute table agent"""
+            try:
+                query_to_use = getattr(state, 'table_sub_query', '') or state.query
+                print(f"[DEBUG] Parallel - Table Agent executing: {query_to_use}")
+                
+                if self.table_agent:
+                    response = self.table_agent.process_query(query_to_use, state.pdf_uuid)
+                    result = response if isinstance(response, str) else str(response)
+                    print(f"[DEBUG] Parallel - Table Agent completed")
+                    return result
+                else:
+                    return f"Table processing: {query_to_use}"
+            except Exception as e:
+                logger.error(f"Error in parallel table execution: {e}")
+                return f"Table processing error: {query_to_use}"
+        
+        def run_rag():
+            """Execute RAG agent"""
+            try:
+                query_to_use = getattr(state, 'rag_sub_query', '') or state.query
+                print(f"[DEBUG] Parallel - RAG Agent executing: {query_to_use}")
+                
+                if self.chatbot_agent:
+                    response = self.chatbot_agent.answer_question(query_to_use, pdf_uuid=state.pdf_uuid)
+                    result = response.get("answer", f"RAG processing: {query_to_use}")
+                    print(f"[DEBUG] Parallel - RAG Agent completed")
+                    return result
+                else:
+                    return f"RAG processing: {query_to_use}"
+            except Exception as e:
+                logger.error(f"Error in parallel RAG execution: {e}")
+                return f"RAG processing error: {query_to_use}"
+        
+        # Execute both agents in parallel using ThreadPoolExecutor
+        start_time = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+            # Submit both tasks
+            table_future = executor.submit(run_table)
+            rag_future = executor.submit(run_rag)
+            
+            # Wait for both to complete
+            table_response = table_future.result()
+            rag_response = rag_future.result()
+        
+        elapsed_time = time.time() - start_time
+        logger.info(f"⚡ Parallel execution completed in {elapsed_time:.2f}s")
+        print(f"[DEBUG] Parallel execution completed in {elapsed_time:.2f}s")
+        
+        return {
+            "table_response": table_response,
+            "rag_response": rag_response
+        }
     
     def _combiner_node(self, state: AgentState) -> Dict[str, Any]:
         """Combiner node to merge responses from Table and RAG nodes using CombinerAgent"""
@@ -356,21 +511,43 @@ class ManagerAgent:
             final_response = result.get("response", "No response generated")
             needs_table = result.get("needs_table", False)
             needs_rag = result.get("needs_rag", False)
+            query_type = result.get("query_type", "unknown")
             
             print(f"[DEBUG] Manager Agent final result: {final_response}")
+            print(f"[DEBUG] Query classification: {query_type}")
             
             return {
                 "answer": final_response,
                 "success": True,
                 "error": None,
+                "query_type": query_type,  # Add for comparison endpoint
                 "metadata": {
                     "used_table": needs_table,
-                    "used_rag": needs_rag
+                    "used_rag": needs_rag,
+                    "query_type": query_type
                 }
             }
             
         except Exception as e:
             logger.error(f"Error in Manager Agent: {e}", exc_info=True)
+            
+            # Check if it's a quota/rate limit error
+            error_str = str(e).lower()
+            if "quota" in error_str or "429" in error_str or "resourceexhausted" in error_str:
+                return {
+                    "answer": "⚠️ **GEMINI API QUOTA EXCEEDED**\n\n" +
+                             "The daily API request limit has been reached. Please try again later or contact support.\n\n" +
+                             "**Details:**\n" +
+                             "- Free tier limit: 250 requests/day\n" +
+                             "- Quota resets at midnight UTC\n" +
+                             "- Current error: API quota exceeded",
+                    "success": False,
+                    "error": "QUOTA_EXCEEDED",
+                    "error_type": "quota_exceeded",
+                    "metadata": {"quota_exceeded": True}
+                }
+            
+            # Generic error for other exceptions
             return {
                 "answer": "I encountered an error while processing your question. Please try again.",
                 "success": False,
@@ -413,6 +590,17 @@ class ManagerAgent:
 
     def _load_table_schema(self, pdf_uuid: str = None) -> str:
         """Load table schema from JSON file with better error handling and path resolution"""
+        import time
+        
+        # ⚡ SPEED OPTIMIZATION: Check cache first
+        cache_key = f"schema_{pdf_uuid or 'all'}"
+        if (self._schema_cache and 
+            self._schema_cache_time and 
+            time.time() - self._schema_cache_time < self._schema_cache_ttl and
+            cache_key in self._schema_cache):
+            logger.debug(f"✅ Using cached schema for {cache_key}")
+            return self._schema_cache[cache_key]
+        
         try:
             # Try multiple possible paths for the schema file
             possible_paths = [
@@ -470,6 +658,14 @@ class ManagerAgent:
                 schema_info += "-" * 50 + "\n"
             
             logger.info(f"Successfully loaded schema with {len(schema_data)} tables")
+            
+            # ⚡ SPEED OPTIMIZATION: Store in cache
+            if not isinstance(self._schema_cache, dict):
+                self._schema_cache = {}
+            self._schema_cache[cache_key] = schema_info
+            self._schema_cache_time = time.time()
+            logger.debug(f"✅ Cached schema for {cache_key}")
+            
             return schema_info
             
         except json.JSONDecodeError as e:

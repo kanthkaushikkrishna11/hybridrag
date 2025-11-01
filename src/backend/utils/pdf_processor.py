@@ -73,7 +73,7 @@ class PDFProcessor:
             print(f"DEBUG PDFProcessor: genai.configure() successful")
             
             print(f"DEBUG PDFProcessor: About to create GenerativeModel...")
-            self.model = genai.GenerativeModel('gemini-1.5-flash')
+            self.model = genai.GenerativeModel('gemini-2.5-flash')
             print(f"DEBUG PDFProcessor: GenerativeModel created successfully")
             
             # Schema storage
@@ -404,7 +404,12 @@ Respond with valid JSON only:
             current_table_context = current_headers_str
         
         prompt = f"""
-    Determine if this new table data is a continuation of the previous table.
+    Determine if this new table data is a CONTINUATION of the previous table across PDF pages.
+
+    IMPORTANT: PDFs often split ONE table across multiple pages. Look for:
+    1. Same column structure (same number and type of columns)
+    2. Data rows that would logically follow the previous table
+    3. The first row might be EITHER headers (repeated from previous page) OR data rows
 
     Current table (headers + top 3 data rows):
     {current_table_context}
@@ -412,16 +417,15 @@ Respond with valid JSON only:
     New table preview (first 3 rows):
     {new_preview_str}
 
-    Analyze if this is a continuation (same structure, no headers) or a new table.
+    DECISION RULES:
+    - If column count MATCHES and data looks similar → it's a CONTINUATION (status: true)
+    - If first row has headers matching current table → STILL a continuation (status: true)
+    - If column count is DIFFERENT → it's a new table (status: false)
+    - If data is COMPLETELY different topic → it's a new table (status: false)
 
-    Respond with JSON only:
+    Respond with JSON ONLY (no markdown, no explanation):
     - If it's a continuation: {{"status": true}}
-    - If it's a new table: {{"status": false, "reason": "explain why it's not a continuation"}}
-
-    Examples:
-    - Same column count, data rows only: {{"status": true}}
-    - Different column count: {{"status": false, "reason": "Column count mismatch"}}
-    - Different data structure: {{"status": false, "reason": "Data structure differs from previous table"}}
+    - If it's a new table: {{"status": false, "reason": "brief reason"}}
 
     JSON response:
     """
@@ -733,14 +737,36 @@ Respond with valid JSON only:
                             len(cleaned_table[0]) == current_table_info.column_count):
                             
                             print("Checking if table continues previous one...")
+                            print(f"  Current table: {current_table_info.name}")
+                            print(f"  Current rows: {len(current_table_info.data)}")
+                            print(f"  New table columns: {len(cleaned_table[0])}")
+                            
+                            # Pass current table data to Gemini for better decision
                             is_continuation = self._query_gemini_for_continuation(
                                 list(current_table_info.schema.keys()),
-                                cleaned_table
+                                cleaned_table,
+                                current_table_data=current_table_info.data
                             )
                             
                             if is_continuation:
-                                print("✓ Continuing previous table")
-                                current_table_info.data.extend(cleaned_table)
+                                print(f"✓ Continuing previous table (adding {len(cleaned_table)} rows)")
+                                # Skip header row if first row looks like headers
+                                first_row = cleaned_table[0] if cleaned_table else []
+                                headers = list(current_table_info.schema.keys())
+                                
+                                # Check if first row is headers (case-insensitive match)
+                                is_header_row = False
+                                if first_row and len(first_row) == len(headers):
+                                    is_header_row = all(
+                                        str(cell).strip().lower() == str(header).strip().lower() 
+                                        for cell, header in zip(first_row, headers)
+                                    )
+                                
+                                if is_header_row:
+                                    print(f"  → Skipping header row in continuation")
+                                    current_table_info.data.extend(cleaned_table[1:])
+                                else:
+                                    current_table_info.data.extend(cleaned_table)
                                 continue
 
                         # Finalize previous table if exists
