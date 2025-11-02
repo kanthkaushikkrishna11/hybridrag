@@ -1,6 +1,13 @@
 // Chat Storage Utility - LocalStorage with Content-Based Identification
 import type { Message } from '../types';
-import CryptoJS from 'crypto-js';
+
+// Dynamic import for crypto-js to avoid bundling issues
+let CryptoJS: any = null;
+try {
+  CryptoJS = require('crypto-js');
+} catch (e) {
+  console.warn('crypto-js not available, using fallback hashing');
+}
 
 const STORAGE_KEY = 'hybridrag_chat_history';
 const COMPARISON_STORAGE_KEY = 'hybridrag_comparison_history';
@@ -38,25 +45,48 @@ export interface StorageData {
 /**
  * Calculate file hash for content-based identification
  * Same file content = Same hash = Same chat history!
+ * Uses Web Crypto API (native) or fallback to simple hash
  */
 export const calculateFileHash = async (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    
-    reader.onload = (e) => {
-      try {
-        const arrayBuffer = e.target?.result as ArrayBuffer;
-        const wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
-        const hash = CryptoJS.MD5(wordArray).toString();
-        resolve(hash);
-      } catch (error) {
-        reject(error);
-      }
-    };
-    
-    reader.onerror = () => reject(new Error('Failed to read file'));
-    reader.readAsArrayBuffer(file);
-  });
+  try {
+    // Try using native Web Crypto API (best, works everywhere)
+    if (window.crypto && window.crypto.subtle) {
+      const arrayBuffer = await file.arrayBuffer();
+      const hashBuffer = await window.crypto.subtle.digest('SHA-256', arrayBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+  } catch (cryptoError) {
+    console.warn('Web Crypto API failed, trying crypto-js:', cryptoError);
+  }
+
+  // Fallback to crypto-js if available
+  if (CryptoJS) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        try {
+          const arrayBuffer = e.target?.result as ArrayBuffer;
+          const wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
+          const hash = CryptoJS.MD5(wordArray).toString();
+          resolve(hash);
+        } catch (error) {
+          reject(error);
+        }
+      };
+      
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  // Final fallback: simple hash based on file properties
+  // Not cryptographically secure, but good enough for history tracking
+  console.warn('Using fallback file identification (name + size + modified date)');
+  const simpleHash = `${file.name}-${file.size}-${file.lastModified}`;
+  return btoa(simpleHash).replace(/[^a-zA-Z0-9]/g, ''); // Base64 encode and remove special chars
 };
 
 /**
