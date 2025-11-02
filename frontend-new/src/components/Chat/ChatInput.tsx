@@ -1,5 +1,6 @@
 // ChatInput component - input field for user messages
-import React, { useState, KeyboardEvent, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import type { KeyboardEvent } from 'react';
 import { Box, IconButton, Paper } from '@mui/material';
 import { Send } from '@mui/icons-material';
 

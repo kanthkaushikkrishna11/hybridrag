@@ -280,7 +280,7 @@ export const exportChatAsText = (fileHash: string): string => {
   text += `Date: ${new Date(data.pdfInfo.uploadedAt).toLocaleString()}\n`;
   text += `\n${'='.repeat(60)}\n\n`;
   
-  data.chatHistory.forEach((msg, idx) => {
+  data.chatHistory.forEach((msg) => {
     const role = msg.role === 'user' ? 'You' : 'Assistant';
     const time = new Date(msg.timestamp).toLocaleTimeString();
     text += `[${time}] ${role}:\n${msg.content}\n\n`;

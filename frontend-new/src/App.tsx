@@ -92,7 +92,7 @@ function App() {
     });
   };
 
-  const handleModeChange = (event: React.MouseEvent<HTMLElement>, newMode: AppMode | null) => {
+  const handleModeChange = (_event: React.MouseEvent<HTMLElement>, newMode: AppMode | null) => {
     if (newMode !== null) {
       setMode(newMode);
     }

@@ -6,7 +6,6 @@ import {
   Typography,
   Button,
   Paper,
-  Grid,
   Alert,
   CircularProgress,
   Chip,
@@ -15,7 +14,8 @@ import {
   Divider,
   Snackbar,
 } from '@mui/material';
-import { PlayArrow, CompareArrows, AccessTime, Psychology, Search, History as HistoryIcon, Refresh } from '@mui/icons-material';
+import Grid from '@mui/material/Unstable_Grid2';
+import { PlayArrow, History as HistoryIcon, Refresh } from '@mui/icons-material';
 import { apiService } from '../../services/api';
 import type { ComparisonResult } from '../../types';
 import { saveComparison, loadChatHistoryByHash, updateComparison } from '../../utils/chatStorage';
