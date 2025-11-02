@@ -13,7 +13,6 @@ import {
   CardContent,
   Divider,
   Snackbar,
-  Grid,
 } from '@mui/material';
 import { PlayArrow, History as HistoryIcon, Refresh } from '@mui/icons-material';
 import { apiService } from '../../services/api';
@@ -594,9 +593,9 @@ const ComparisonDemo: React.FC<ComparisonDemoProps> = ({ pdfUuid, pdfName, pdfHa
               </Paper>
 
               {/* Side-by-Side Answers */}
-              <Grid container spacing={3}>
+              <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                 {/* Conventional RAG Answer */}
-                <Grid item xs={12} md={6}>
+                <Box sx={{ flex: '1 1 calc(50% - 12px)', minWidth: '300px' }}>
                   <Paper
                     elevation={3}
                     sx={{
@@ -637,10 +636,10 @@ const ComparisonDemo: React.FC<ComparisonDemoProps> = ({ pdfUuid, pdfName, pdfHa
                       )}
                     </Box>
                   </Paper>
-                </Grid>
+                </Box>
 
                 {/* Hybrid RAG Answer */}
-                <Grid item xs={12} md={6}>
+                <Box sx={{ flex: '1 1 calc(50% - 12px)', minWidth: '300px' }}>
                   <Paper
                     elevation={3}
                     sx={{
@@ -681,8 +680,8 @@ const ComparisonDemo: React.FC<ComparisonDemoProps> = ({ pdfUuid, pdfName, pdfHa
                       )}
                     </Box>
                   </Paper>
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
 
               {/* Simple Footer Note */}
               <Box sx={{ mt: 3, textAlign: 'center' }}>
@@ -752,9 +751,9 @@ const ComparisonDemo: React.FC<ComparisonDemoProps> = ({ pdfUuid, pdfName, pdfHa
                       </Box>
                     </Box>
 
-                    <Grid container spacing={2}>
+                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                       {/* Conventional RAG Result */}
-                      <Grid item xs={12} md={6}>
+                      <Box sx={{ flex: '1 1 calc(50% - 8px)', minWidth: '250px' }}>
                         <Paper elevation={0} sx={{ p: 2, bgcolor: '#fef5f8', border: '1px solid #f48fb1' }}>
                           <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: '#c2185b' }}>
                             📚 Conventional RAG
@@ -787,10 +786,10 @@ const ComparisonDemo: React.FC<ComparisonDemoProps> = ({ pdfUuid, pdfName, pdfHa
                             {item.conventional.answer}
                           </Typography>
                         </Paper>
-                      </Grid>
+                      </Box>
 
                       {/* Hybrid RAG Result */}
-                      <Grid item xs={12} md={6}>
+                      <Box sx={{ flex: '1 1 calc(50% - 8px)', minWidth: '250px' }}>
                         <Paper elevation={0} sx={{ p: 2, bgcolor: '#e3f2fd', border: '1px solid #4facfe' }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                             <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0288d1' }}>
@@ -835,8 +834,8 @@ const ComparisonDemo: React.FC<ComparisonDemoProps> = ({ pdfUuid, pdfName, pdfHa
                             {item.hybrid.answer}
                           </Typography>
                         </Paper>
-                      </Grid>
-                    </Grid>
+                      </Box>
+                    </Box>
                   </CardContent>
                 </Card>
               ))}
