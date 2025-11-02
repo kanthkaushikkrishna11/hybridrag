@@ -15,7 +15,7 @@ export const apiService = {
     
     const response = await apiClient.post('/uploadpdf', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      timeout: 600000, // 10 minutes for PDF uploads (t3.micro is slow)
+      timeout: 900000, // 15 minutes for PDF uploads (extra buffer for t3.micro)
     });
     
     return response.data;
