@@ -56,46 +56,62 @@ const ChatInput: React.FC<ChatInputProps> = ({
           event.preventDefault();
           const cutText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
           if (cutText) {
-            navigator.clipboard.writeText(cutText).then(() => {
-              const start = textarea.selectionStart;
-              const end = textarea.selectionEnd;
-              const newValue = textarea.value.substring(0, start) + textarea.value.substring(end);
-              setInputValue(newValue);
-              // Set cursor position
-              setTimeout(() => {
-                textarea.selectionStart = start;
-                textarea.selectionEnd = start;
-              }, 0);
-              console.log('✅ Cmd+X: Cut executed');
-            });
+            // Use clipboard API only if available (HTTPS/localhost)
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(cutText).then(() => {
+                console.log('✅ Cmd+X: Cut executed (clipboard)');
+              }).catch(() => {
+                console.log('⚠️ Clipboard write failed, but cut executed');
+              });
+            }
+            // Execute cut regardless of clipboard API
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const newValue = textarea.value.substring(0, start) + textarea.value.substring(end);
+            setInputValue(newValue);
+            // Set cursor position
+            setTimeout(() => {
+              textarea.selectionStart = start;
+              textarea.selectionEnd = start;
+            }, 0);
           }
           break;
           
         case 'c': // Copy
           event.preventDefault();
           const copyText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
-          if (copyText) {
+          if (copyText && navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(copyText).then(() => {
               console.log('✅ Cmd+C: Copy executed');
+            }).catch(() => {
+              console.log('⚠️ Clipboard API not available (HTTP)');
             });
           }
           break;
           
         case 'v': // Paste
-          event.preventDefault();
-          navigator.clipboard.readText().then(text => {
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const newValue = textarea.value.substring(0, start) + text + textarea.value.substring(end);
-            setInputValue(newValue);
-            // Set cursor position after pasted text
-            setTimeout(() => {
-              const newCursorPos = start + text.length;
-              textarea.selectionStart = newCursorPos;
-              textarea.selectionEnd = newCursorPos;
-            }, 0);
-            console.log('✅ Cmd+V: Paste executed');
-          });
+          // Don't prevent default - let browser handle paste on HTTP sites
+          if (navigator.clipboard && navigator.clipboard.readText) {
+            event.preventDefault();
+            navigator.clipboard.readText().then(text => {
+              const start = textarea.selectionStart;
+              const end = textarea.selectionEnd;
+              const newValue = textarea.value.substring(0, start) + text + textarea.value.substring(end);
+              setInputValue(newValue);
+              // Set cursor position after pasted text
+              setTimeout(() => {
+                const newCursorPos = start + text.length;
+                textarea.selectionStart = newCursorPos;
+                textarea.selectionEnd = newCursorPos;
+              }, 0);
+              console.log('✅ Cmd+V: Paste executed (clipboard API)');
+            }).catch(() => {
+              console.log('⚠️ Clipboard read failed, using browser paste');
+            });
+          } else {
+            // Let browser handle paste naturally on HTTP
+            console.log('⚠️ Clipboard API not available, using browser paste');
+          }
           break;
           
         case 'z': // Undo (let native behavior handle this)
