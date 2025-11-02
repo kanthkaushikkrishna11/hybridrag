@@ -40,7 +40,7 @@ class Config:
         self.PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX", "pdf-assistant-index")
         self.PINECONE_CLOUD = os.getenv("PINECONE_CLOUD", "aws")
         self.PINECONE_REGION = os.getenv("PINECONE_REGION", "us-east-1")
-        self.PINECONE_DIMENSION = 768
+        self.PINECONE_DIMENSION = 384  # all-MiniLM-L6-v2 (faster than 768-dim models)
         
         # Google AI configuration - ADDED validation
         self.GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")

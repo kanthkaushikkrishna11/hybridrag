@@ -14,9 +14,10 @@ class EmbeddingService:
     def __init__(self, gemini_api_key: str, pinecone_config: dict):
         """Initialize the embedding service with HuggingFace and Pinecone."""
         # Initialize HuggingFace Sentence Transformer (free, local)
-        # Using all-mpnet-base-v2: 768 dimensions, excellent quality
-        self.embedding_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
-        logger.info("HuggingFace Sentence Transformer loaded successfully (all-mpnet-base-v2)")
+        # Using all-MiniLM-L6-v2: 384 dimensions, good quality, 2-3x FASTER!
+        # Perfect for t3.micro - much faster embedding generation
+        self.embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+        logger.info("HuggingFace Sentence Transformer loaded successfully (all-MiniLM-L6-v2)")
         
         # Initialize Pinecone
         try:
@@ -40,9 +41,10 @@ class EmbeddingService:
             logger.info("Pinecone initialized successfully")
             
             print(f"\n=== Embedding Service Initialization ===")
-            print(f"Embedding Model: HuggingFace sentence-transformers/all-mpnet-base-v2 (FREE, LOCAL)")
+            print(f"Embedding Model: HuggingFace sentence-transformers/all-MiniLM-L6-v2 (FAST, FREE)")
             print(f"Pinecone Index: {pinecone_config['index_name']}")
-            print(f"Dimension: {pinecone_config['dimension']} (768 for all-mpnet-base-v2)")
+            print(f"Dimension: {pinecone_config['dimension']} (384 for all-MiniLM-L6-v2)")
+            print(f"Performance: 2-3x FASTER than all-mpnet-base-v2!")
             print("=======================================\n")
             
         except Exception as e:
@@ -69,7 +71,7 @@ class EmbeddingService:
             embeddings_list = [emb.tolist() for emb in embeddings]
             
             logger.info(f"Successfully generated {len(embeddings_list)} embeddings locally")
-            print(f"✅ Successfully generated {len(embeddings_list)} embeddings (768-dim, local)")
+            print(f"✅ Successfully generated {len(embeddings_list)} embeddings (384-dim, fast!)")
             return embeddings_list
             
         except Exception as e:

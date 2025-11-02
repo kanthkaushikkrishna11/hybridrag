@@ -60,7 +60,7 @@ class ChatbotAgent(BaseChatbotAgent):
                 spec = ServerlessSpec(cloud=self.pinecone_cloud, region=self.pinecone_region)
                 self.pc.create_index(
                     name=self.pinecone_index_name,
-                    dimension=768,  # Dimension for Gemini embedding model
+                    dimension=384,  # Dimension for all-MiniLM-L6-v2 (faster!)
                     metric="cosine",
                     spec=spec
                 )
@@ -90,9 +90,10 @@ class ChatbotAgent(BaseChatbotAgent):
             from langchain_huggingface import HuggingFaceEmbeddings
             
             # Use HuggingFace Sentence Transformers (runs locally, no API calls!)
-            # all-mpnet-base-v2: 768 dimensions, excellent quality, completely free
+            # all-MiniLM-L6-v2: 384 dimensions, good quality, 2-3x FASTER!
+            # Perfect for t3.micro - faster embeddings = faster uploads
             self.embeddings = HuggingFaceEmbeddings(
-                model_name="sentence-transformers/all-mpnet-base-v2",
+                model_name="sentence-transformers/all-MiniLM-L6-v2",
                 model_kwargs={'device': 'cpu'},  # Use CPU (or 'cuda' if you have GPU)
                 encode_kwargs={'normalize_embeddings': True}  # Normalize for better similarity
             )
