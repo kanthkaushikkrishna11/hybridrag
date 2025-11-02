@@ -13,8 +13,8 @@ import {
   CardContent,
   Divider,
   Snackbar,
+  Grid,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 import { PlayArrow, History as HistoryIcon, Refresh } from '@mui/icons-material';
 import { apiService } from '../../services/api';
 import type { ComparisonResult } from '../../types';
