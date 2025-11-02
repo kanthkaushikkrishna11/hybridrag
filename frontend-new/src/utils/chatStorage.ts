@@ -1,13 +1,9 @@
 // Chat Storage Utility - LocalStorage with Content-Based Identification
 import type { Message } from '../types';
 
-// Dynamic import for crypto-js to avoid bundling issues
-let CryptoJS: any = null;
-try {
-  CryptoJS = require('crypto-js');
-} catch (e) {
-  console.warn('crypto-js not available, using fallback hashing');
-}
+// Import crypto-js but use it as fallback only
+// TypeScript will bundle it, but we prefer native Web Crypto API
+import CryptoJS from 'crypto-js';
 
 const STORAGE_KEY = 'hybridrag_chat_history';
 const COMPARISON_STORAGE_KEY = 'hybridrag_comparison_history';
