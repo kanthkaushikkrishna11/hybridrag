@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8010';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 60000,
+  timeout: 120000, // 2 minutes for regular requests
 });
 
 export const apiService = {
@@ -15,7 +15,7 @@ export const apiService = {
     
     const response = await apiClient.post('/uploadpdf', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      timeout: 300000,
+      timeout: 600000, // 10 minutes for PDF uploads (t3.micro is slow)
     });
     
     return response.data;
